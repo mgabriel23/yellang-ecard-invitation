@@ -1,10 +1,8 @@
 /* =========================================================
    Szhawn Marq Invitation — main stylesheet
-   Companion to index.html (Tailwind handles layout/utilities;
-   this file holds custom components + reduced-motion safety net)
    ========================================================= */
 
-/* Soft cards */
+/* ---------- Soft cards ---------- */
 .soft-card {
     background: #ffffff;
     border: 2px solid #e0f2fe;
@@ -17,7 +15,7 @@
     box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.1);
 }
 
-/* 3D envelope */
+/* ---------- 3D envelope ---------- */
 .envelope-wrapper {
     perspective: 1000px;
 }
@@ -78,22 +76,11 @@
 .envelope.open .letter {
     transform: translateY(-85px);
 }
-
 .envelope.open {
     transform: translateY(35px);
 }
 
-/* Smaller lift on narrow screens so the letter doesn't crowd the header */
-@media (max-width: 639px) {
-    .envelope.open .letter {
-        transform: translateY(-70px);
-    }
-    .envelope.open {
-        transform: translateY(28px);
-    }
-}
-
-/* Bear seal */
+/* ---------- Bear seal ---------- */
 .bear-seal {
     position: absolute;
     top: 42%;
@@ -117,7 +104,39 @@
     pointer-events: none;
 }
 
-/* Scroll reveal */
+/* ---------- Medium phones: reduce lift so the letter doesn't crowd the header ---------- */
+@media (max-width: 639px) {
+    .envelope.open .letter {
+        transform: translateY(-70px);
+    }
+    .envelope.open {
+        transform: translateY(28px);
+    }
+}
+
+/* ---------- Very narrow phones (<360px, e.g. Galaxy Fold outer) ---------- */
+@media (max-width: 359px) {
+    .envelope {
+        width: 280px;
+        height: 196px;
+    }
+    .envelope .letter {
+        padding-top: 46px;
+    }
+    .envelope.open .letter {
+        transform: translateY(-60px);
+    }
+    .envelope.open {
+        transform: translateY(24px);
+    }
+}
+
+/* ---------- Countdown: stable digit width ---------- */
+.countdown-value {
+    font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Scroll reveal ---------- */
 .reveal {
     opacity: 0;
     transform: translateY(24px);
@@ -125,13 +144,12 @@
         opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
         transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
 .reveal.active {
     opacity: 1;
     transform: translateY(0);
 }
 
-/* Gentle float */
+/* ---------- Gentle float ---------- */
 @keyframes gentleFloat {
     0%,
     100% {
@@ -141,18 +159,17 @@
         transform: translateY(-8px) rotate(2deg);
     }
 }
-
 .animate-float {
     animation: gentleFloat 4s ease-in-out infinite;
 }
 
-/* Dot background */
+/* ---------- Dot background ---------- */
 .bg-dots {
     background-image: radial-gradient(#bae6fd 1.5px, transparent 1.5px);
     background-size: 24px 24px;
 }
 
-/* Reduced-motion safety net — disables everything decorative */
+/* ---------- Reduced motion ---------- */
 @media (prefers-reduced-motion: reduce) {
     *,
     *::before,

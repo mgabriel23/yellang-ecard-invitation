@@ -1,7 +1,6 @@
 /* =========================================================
    Szhawn Marq Invitation — behaviour
-   No backend. Everything runs client-side.
-   RSVP submission is currently a local stub — see Batch 4.
+   RSVP submission remains a local stub until Batch 4.
    ========================================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -11,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const EVENT_TITLE = "Szhawn Marq's 1st Birthday & Holy Baptism";
 	const EVENT_DESC = "Join us in celebrating Szhawn Marq Resurrection's 1st Birthday & Holy Baptism!";
 	const EVENT_LOCATION = 'Holy Cross Parish & Reception Hall, Valenzuela City, Metro Manila';
-	const EVENT_START = '20261213T100000';  // local time in Asia/Manila
+	const EVENT_START = '20261213T100000';
 	const EVENT_END = '20261213T150000';
 
 	/* ---------- Refs ---------- */
@@ -24,12 +23,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	const toggleAudioBtn = document.getElementById('toggleAudioBtn');
 	const audioIcon = document.getElementById('audioIcon');
 	const heroPhoto = document.getElementById('heroPhoto');
+	const countdownSr = document.getElementById('countdownSr');
 
 	const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 	let isPlaying = false;
 
-	/* ---------- Scroll lock while gate is open ---------- */
+	/* ---------- Lock scroll while the gate is open ---------- */
 	document.body.style.overflow = 'hidden';
 
 	/* ---------- Helpers ---------- */
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			toggleAudioBtn.setAttribute('aria-label', 'Pause background music');
 			toggleAudioBtn.setAttribute('aria-pressed', 'true');
 		} else {
-			audioIcon.className = 'fas fa-volume-mute text-lg text-slate-400';
+			audioIcon.className = 'fas fa-volume-mute text-lg text-slate-500';
 			toggleAudioBtn.setAttribute('aria-label', 'Play background music');
 			toggleAudioBtn.setAttribute('aria-pressed', 'false');
 		}
@@ -75,7 +75,6 @@ document.addEventListener('DOMContentLoaded', () => {
 			audioControl.classList.remove('hidden');
 			updateAudioUI();
 		}).catch(() => {
-			// Autoplay was blocked — show the control so the guest can tap.
 			audioControl.classList.remove('hidden');
 			updateAudioUI();
 		});
@@ -120,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const dtstamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
 		const uid = `szhawn-1st-bday-${now.getTime()}@szhawn-invitation`;
 
-		const lines = [
+		return [
 			'BEGIN:VCALENDAR',
 			'VERSION:2.0',
 			'PRODID:-//Szhawn Marq Invitation//EN',
@@ -137,8 +136,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			'STATUS:CONFIRMED',
 			'END:VEVENT',
 			'END:VCALENDAR'
-		];
-		return lines.join('\r\n') + '\r\n';
+		].join('\r\n') + '\r\n';
 	}
 
 	document.getElementById('addToCalendarBtn').addEventListener('click', () => {
@@ -162,7 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		seconds: document.getElementById('seconds')
 	};
 
-	function pad(n) { return n < 10 ? '0' + n : String(n); }
+	const pad = n => (n < 10 ? '0' + n : String(n));
 
 	function updateCountdown() {
 		const diff = targetTime - Date.now();
@@ -176,7 +174,21 @@ document.addEventListener('DOMContentLoaded', () => {
 		els.seconds.textContent = pad(Math.floor((diff % 60000) / 1000));
 	}
 
+	function announceCountdown() {
+		if (!countdownSr) return;
+		const diff = targetTime - Date.now();
+		if (diff <= 0) {
+			countdownSr.textContent = "The celebration day has arrived!";
+			return;
+		}
+		const days = Math.floor(diff / 86400000);
+		countdownSr.textContent = days <= 1
+			? "Less than a day until Szhawn Marq's celebration on December 13, 2026."
+			: `${days} days until Szhawn Marq's celebration on December 13, 2026.`;
+	}
+
 	updateCountdown();
+	announceCountdown();
 	setInterval(updateCountdown, 1000);
 
 	/* ---------- Scroll reveal ---------- */
@@ -194,18 +206,16 @@ document.addEventListener('DOMContentLoaded', () => {
 		revealEls.forEach(el => observer.observe(el));
 	}
 
-	/* ---------- RSVP (local stub — Batch 4 will wire to a form service) ---------- */
+	/* ---------- RSVP (local stub — Batch 4 wires the real endpoint) ---------- */
 	const rsvpForm = document.getElementById('rsvpForm');
 	const rsvpSuccess = document.getElementById('rsvpSuccess');
 	const submitRsvpBtn = document.getElementById('submitRsvpBtn');
 	const guestCount = document.getElementById('guestCount');
 	const declineRadio = rsvpForm.querySelector('input[name="entry.1000002"][value="Reject"]');
 
-	// Disable guest count when declining
 	rsvpForm.querySelectorAll('input[name="entry.1000002"]').forEach(radio => {
 		radio.addEventListener('change', () => {
-			const declined = declineRadio.checked;
-			guestCount.disabled = declined;
+			guestCount.disabled = declineRadio.checked;
 		});
 	});
 
