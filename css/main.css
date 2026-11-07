@@ -1,0 +1,173 @@
+/* =========================================================
+   Szhawn Marq Invitation — main stylesheet
+   Companion to index.html (Tailwind handles layout/utilities;
+   this file holds custom components + reduced-motion safety net)
+   ========================================================= */
+
+/* Soft cards */
+.soft-card {
+    background: #ffffff;
+    border: 2px solid #e0f2fe;
+    box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.08);
+}
+
+.soft-card-bear {
+    background: #ffffff;
+    border: 2px solid #fef3c7;
+    box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.1);
+}
+
+/* 3D envelope */
+.envelope-wrapper {
+    perspective: 1000px;
+}
+
+.envelope {
+    position: relative;
+    width: 300px;
+    height: 210px;
+    background: #e0f2fe;
+    border-radius: 18px;
+    box-shadow: 0 16px 32px rgba(2, 132, 199, 0.12);
+    transform-style: preserve-3d;
+    transition: transform 0.6s ease;
+    border: 2.5px solid #7dd3fc;
+}
+
+@media (min-width: 640px) {
+    .envelope {
+        width: 380px;
+        height: 250px;
+    }
+}
+
+.envelope .flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 54%;
+    background: #bae6fd;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 3;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+}
+
+.envelope.open .flap {
+    transform: rotateX(180deg);
+    z-index: 1;
+}
+
+.envelope .letter {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 50px 14px 16px;
+    z-index: 2;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    border: 2px dashed #bae6fd;
+}
+
+.envelope.open .letter {
+    transform: translateY(-85px);
+}
+
+.envelope.open {
+    transform: translateY(35px);
+}
+
+/* Smaller lift on narrow screens so the letter doesn't crowd the header */
+@media (max-width: 639px) {
+    .envelope.open .letter {
+        transform: translateY(-70px);
+    }
+    .envelope.open {
+        transform: translateY(28px);
+    }
+}
+
+/* Bear seal */
+.bear-seal {
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    width: 52px;
+    height: 52px;
+    background: #f59e0b;
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.4s ease;
+}
+
+.envelope.open .bear-seal {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Scroll reveal */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+        opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Gentle float */
+@keyframes gentleFloat {
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-8px) rotate(2deg);
+    }
+}
+
+.animate-float {
+    animation: gentleFloat 4s ease-in-out infinite;
+}
+
+/* Dot background */
+.bg-dots {
+    background-image: radial-gradient(#bae6fd 1.5px, transparent 1.5px);
+    background-size: 24px 24px;
+}
+
+/* Reduced-motion safety net — disables everything decorative */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    .animate-float,
+    .animate-bounce {
+        animation: none !important;
+    }
+    .reveal {
+        opacity: 1;
+        transform: none;
+    }
+}
