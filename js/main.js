@@ -24,12 +24,19 @@ document.addEventListener('DOMContentLoaded', () => {
 	const audioIcon = document.getElementById('audioIcon');
 	const heroPhoto = document.getElementById('heroPhoto');
 	const countdownSr = document.getElementById('countdownSr');
+	const countdownCards = document.getElementById('countdownCards');
+	const countdownLive = document.getElementById('countdownLive');
+	const countdownLabel = document.getElementById('countdownLabel');
+	const rsvpPill = document.getElementById('rsvpPill');
+	const heroSection = document.querySelector('main > section');
+	const rsvpSection = document.getElementById('rsvp');
 
 	const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 	let isPlaying = false;
+	let rsvpSubmitted = false;
 
-	/* ---------- Lock scroll while the gate is open ---------- */
+	/* ---------- Scroll lock while gate is open ---------- */
 	document.body.style.overflow = 'hidden';
 
 	/* ---------- Helpers ---------- */
@@ -89,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				mainContent.inert = false;
 				document.body.style.overflow = '';
 				startScrollReveal();
+				startRsvpPillTracking();
 			}, 700);
 		}, 1100);
 	}
@@ -151,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		showToast('Calendar file downloaded');
 	});
 
-	/* ---------- Countdown ---------- */
+	/* ---------- Countdown + zero-state ---------- */
 	const targetTime = new Date(EVENT_DATE_ISO).getTime();
 	const els = {
 		days: document.getElementById('days'),
@@ -162,10 +170,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const pad = n => (n < 10 ? '0' + n : String(n));
 
+	function enterZeroState() {
+		if (!countdownCards || !countdownLive) return;
+		countdownCards.classList.add('hidden');
+		countdownLive.classList.remove('hidden');
+		if (countdownLabel) countdownLabel.classList.add('hidden');
+	}
+
 	function updateCountdown() {
 		const diff = targetTime - Date.now();
 		if (diff <= 0) {
 			Object.values(els).forEach(el => { el.textContent = '00'; });
+			enterZeroState();
 			return;
 		}
 		els.days.textContent = pad(Math.floor(diff / 86400000));
@@ -206,6 +222,41 @@ document.addEventListener('DOMContentLoaded', () => {
 		revealEls.forEach(el => observer.observe(el));
 	}
 
+	/* ---------- Floating RSVP pill ---------- */
+	let pillHeroSeen = false;
+	let pillRsvpInView = false;
+
+	function refreshRsvpPill() {
+		if (!rsvpPill) return;
+		const show = !rsvpSubmitted && pillHeroSeen && !pillRsvpInView;
+		rsvpPill.classList.toggle('hidden', !show);
+		rsvpPill.classList.toggle('flex', show);
+	}
+
+	function startRsvpPillTracking() {
+		if (!rsvpPill || !heroSection || !rsvpSection) return;
+
+		const heroObserver = new IntersectionObserver((entries) => {
+			entries.forEach(e => {
+				pillHeroSeen = !e.isIntersecting;
+				refreshRsvpPill();
+			});
+		}, { threshold: 0.15 });
+		heroObserver.observe(heroSection);
+
+		const rsvpObserver = new IntersectionObserver((entries) => {
+			entries.forEach(e => {
+				pillRsvpInView = e.isIntersecting;
+				refreshRsvpPill();
+			});
+		}, { threshold: 0.25 });
+		rsvpObserver.observe(rsvpSection);
+
+		rsvpPill.addEventListener('click', () => {
+			rsvpSection.scrollIntoView({ behavior: prefersReducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
+		});
+	}
+
 	/* ---------- RSVP (local stub — Batch 4 wires the real endpoint) ---------- */
 	const rsvpForm = document.getElementById('rsvpForm');
 	const rsvpSuccess = document.getElementById('rsvpSuccess');
@@ -228,6 +279,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		setTimeout(() => {
 			rsvpForm.classList.add('hidden');
 			rsvpSuccess.classList.remove('hidden');
+			rsvpSubmitted = true;
+			refreshRsvpPill();
 			launchConfetti();
 		}, 500);
 	});

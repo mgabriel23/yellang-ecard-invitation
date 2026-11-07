@@ -121,7 +121,11 @@
             id="envelopeGate"
             class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-babyblue-50/95 backdrop-blur-sm px-4 py-8 overflow-y-auto transition-opacity duration-700">
             <div class="text-center mb-6">
-                <span class="...">🧸 We Can Bearly Wait!</span>
+                <span
+                    class="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-bear-honey text-bear-brown font-heading text-xs sm:text-sm font-semibold border border-bear-warm">
+                    <span aria-hidden="true">🧸</span>
+                    We Can Bearly Wait!
+                </span>
                 <p class="font-heading text-3xl sm:text-4xl text-babyblue-600 font-bold mt-2">You're Invited!</p>
                 <p class="font-sans text-slate-600 text-sm sm:text-base">
                     Szhawn Marq's 1st Birthday &amp; Holy Baptism
@@ -146,7 +150,7 @@
                             class="block font-heading text-slate-800 font-bold text-xs sm:text-sm uppercase tracking-wider">
                             Szhawn Marq Resurrection
                         </span>
-                        <p class="text-[11px] text-slate-500 mt-0.5 font-semibold">Sunday, Dec 13, 2026</p>
+                        <p class="text-[11px] text-slate-600 mt-0.5 font-semibold">Sunday, Dec 13, 2026</p>
                         <div class="w-12 h-[2px] bg-babyblue-200 my-1.5 rounded-full" aria-hidden="true"></div>
                         <span class="text-[10px] uppercase text-babyblue-500 font-bold tracking-widest">
                             Tap Open Invitation
@@ -182,24 +186,26 @@
             <section class="relative min-h-screen flex items-center justify-center pt-14 pb-16 px-4 overflow-hidden">
                 <div class="max-w-3xl mx-auto text-center relative z-10">
                     <div
-                        class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white text-bear-brown text-xs sm:text-sm font-heading font-semibold border border-bear-warm mb-5 shadow-sm animate-float">
-                        <span aria-hidden="true">🧸</span>
-                        <span>1st Birthday & Holy Baptism Celebration</span>
-                        <span aria-hidden="true">🕊️</span>
+                        class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white text-bear-brown text-xs sm:text-sm font-heading font-semibold border border-bear-warm mb-6 shadow-sm">
+                        <span>1st Birthday</span>
+                        <span class="text-bear-accent" aria-hidden="true">·</span>
+                        <span>Holy Baptism</span>
                     </div>
 
                     <span
-                        class="block font-sans text-xs sm:text-sm uppercase tracking-widest text-babyblue-600 font-bold mb-1 reveal">
+                        class="block font-sans text-[11px] sm:text-xs uppercase tracking-[0.22em] text-babyblue-600 font-bold mb-3 reveal">
                         Join Us For The Double Celebration Of
                     </span>
 
                     <h1
-                        class="font-heading text-3xl sm:text-5xl md:text-6xl font-bold text-slate-800 tracking-tight mb-2 reveal">
-                        Szhawn Marq Resurrection
+                        class="font-heading text-4xl sm:text-5xl md:text-6xl font-bold text-slate-900 tracking-[-0.03em] leading-[1.05] mb-3 reveal">
+                        Szhawn Marq
+                        <br class="sm:hidden" />
+                        Resurrection
                     </h1>
 
-                    <p class="font-sans text-bear-soft text-lg sm:text-2xl font-semibold mb-6 reveal">
-                        Our Little Bear Is Turning One!
+                    <p class="font-sans text-bear-soft text-lg sm:text-xl font-semibold mb-8 reveal">
+                        Our Little Bear Is Turning One
                     </p>
 
                     <div class="reveal relative inline-block my-2">
@@ -262,7 +268,7 @@
                                     <p class="text-[11px] text-slate-600 uppercase tracking-wider font-bold">
                                         Location
                                     </p>
-                                    <p class="text-sm font-bold text-slate-800">Holy Cross Parish & Hall</p>
+                                    <p class="text-sm font-bold text-slate-800">Holy Cross Parish &amp; Hall</p>
                                     <p class="text-xs text-slate-600">Valenzuela, Metro Manila</p>
                                 </div>
                             </div>
@@ -278,13 +284,18 @@
                     </div>
 
                     <!-- COUNTDOWN -->
-                    <div id="countdown" class="mt-10 reveal w-full max-w-md mx-auto">
+                    <div id="countdown" class="mt-12 reveal w-full max-w-md mx-auto">
                         <p
-                            class="text-xs uppercase tracking-widest text-slate-600 font-bold mb-3 flex items-center justify-center gap-1.5">
+                            id="countdownLabel"
+                            class="text-[11px] uppercase tracking-[0.22em] text-slate-600 font-bold mb-3 flex items-center justify-center gap-1.5">
                             <i class="fas fa-clock text-babyblue-400" aria-hidden="true"></i>
                             Countdown To Celebration
                         </p>
-                        <div class="grid grid-cols-4 gap-2 sm:gap-3 font-heading" aria-hidden="true">
+
+                        <div
+                            id="countdownCards"
+                            class="grid grid-cols-4 gap-2 sm:gap-3 font-heading"
+                            aria-hidden="true">
                             <div
                                 class="bg-white p-2.5 sm:p-3 rounded-2xl border border-babyblue-200 text-center shadow-sm">
                                 <span
@@ -334,16 +345,26 @@
                                 </span>
                             </div>
                         </div>
+
+                        <div
+                            id="countdownLive"
+                            class="hidden rounded-2xl bg-white border border-babyblue-200 px-5 py-4 shadow-sm text-center">
+                            <p class="font-heading text-lg font-bold text-babyblue-600">The Day Is Here</p>
+                            <p class="text-xs text-slate-600 mt-1">
+                                Join us at Holy Cross Parish as we celebrate Szhawn Marq's milestones.
+                            </p>
+                        </div>
+
                         <p id="countdownSr" class="sr-only">Loading countdown…</p>
                     </div>
 
-                    <div class="mt-10 reveal">
+                    <div class="mt-12 reveal">
                         <a
                             href="#program"
-                            class="inline-flex flex-col items-center text-xs text-slate-600 font-semibold hover:text-babyblue-500 transition-colors">
+                            class="inline-flex flex-col items-center gap-1.5 text-[11px] uppercase tracking-[0.18em] text-slate-600 font-semibold hover:text-babyblue-500 transition-colors">
                             <span>Event Details</span>
                             <i
-                                class="fas fa-chevron-down mt-1.5 animate-bounce text-babyblue-400 text-sm"
+                                class="fas fa-chevron-down animate-bounce text-babyblue-400 text-xs"
                                 aria-hidden="true"></i>
                         </a>
                     </div>
@@ -351,14 +372,20 @@
             </section>
 
             <!-- PROGRAM -->
-            <section id="program" class="py-14 px-4 relative border-t border-babyblue-200/60 bg-white/60">
+            <section id="program" class="py-16 sm:py-20 px-4 relative bg-white/60">
                 <div class="max-w-3xl mx-auto">
-                    <div class="text-center mb-10">
-                        <span class="text-babyblue-500 text-xs uppercase tracking-widest font-heading font-bold">
+                    <div class="text-center mb-12">
+                        <span class="text-babyblue-500 text-[11px] uppercase tracking-[0.22em] font-heading font-bold">
                             Sequence of Events
                         </span>
-                        <h2 class="font-heading text-2xl sm:text-3xl font-bold text-slate-800 mt-0.5">Program Flow</h2>
-                        <div class="w-12 h-1 bg-babyblue-300 mx-auto mt-2 rounded-full" aria-hidden="true"></div>
+                        <h2 class="font-heading text-2xl sm:text-3xl font-bold text-slate-900 tracking-[-0.02em] mt-1">
+                            Program Flow
+                        </h2>
+                        <div class="flex justify-center items-center gap-1 mt-3" aria-hidden="true">
+                            <span class="w-1 h-1 rounded-full bg-babyblue-300"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-babyblue-400"></span>
+                            <span class="w-1 h-1 rounded-full bg-babyblue-300"></span>
+                        </div>
                     </div>
 
                     <div class="relative border-l-2 border-babyblue-200 ml-4 sm:ml-28 space-y-6">
@@ -370,12 +397,12 @@
                                 class="sm:absolute sm:right-full sm:mr-4 sm:top-1 font-heading text-babyblue-600 font-bold text-xs sm:text-right sm:w-24 mb-1 sm:mb-0">
                                 10:00 AM
                             </div>
-                            <div class="soft-card p-4 rounded-2xl">
-                                <div class="flex items-center gap-2 mb-0.5">
+                            <div class="soft-card p-4 sm:p-5 rounded-2xl">
+                                <div class="flex items-center gap-2.5 mb-1">
                                     <i class="fas fa-water text-babyblue-500 text-sm" aria-hidden="true"></i>
-                                    <h3 class="font-heading text-base font-bold text-slate-800">Holy Baptism Rite</h3>
+                                    <h3 class="font-heading text-base font-bold text-slate-900">Holy Baptism Rite</h3>
                                 </div>
-                                <p class="text-slate-600 text-xs">
+                                <p class="text-slate-600 text-xs leading-relaxed">
                                     Christening ceremony at Holy Cross Parish Church with godparents and family.
                                 </p>
                             </div>
@@ -386,17 +413,17 @@
                                 class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-bear-accent border-2 border-white shadow-sm"
                                 aria-hidden="true"></div>
                             <div
-                                class="sm:absolute sm:-left-28 sm:top-1 font-heading text-babyblue-600 font-bold text-xs sm:text-right w-20 mb-1 sm:mb-0">
+                                class="sm:absolute sm:right-full sm:mr-4 sm:top-1 font-heading text-babyblue-600 font-bold text-xs sm:text-right sm:w-24 mb-1 sm:mb-0">
                                 11:30 AM
                             </div>
-                            <div class="soft-card p-4 rounded-2xl">
-                                <div class="flex items-center gap-2 mb-0.5">
+                            <div class="soft-card p-4 sm:p-5 rounded-2xl">
+                                <div class="flex items-center gap-2.5 mb-1">
                                     <i class="fas fa-door-open text-bear-accent text-sm" aria-hidden="true"></i>
-                                    <h3 class="font-heading text-base font-bold text-slate-800">
-                                        Reception Arrival & Registration
+                                    <h3 class="font-heading text-base font-bold text-slate-900">
+                                        Reception Arrival &amp; Registration
                                     </h3>
                                 </div>
-                                <p class="text-slate-600 text-xs">
+                                <p class="text-slate-600 text-xs leading-relaxed">
                                     Guests arrive at the parish hall for registration, welcome drinks, and photo booth.
                                 </p>
                             </div>
@@ -407,17 +434,17 @@
                                 class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-babyblue-400 border-2 border-white shadow-sm"
                                 aria-hidden="true"></div>
                             <div
-                                class="sm:absolute sm:-left-28 sm:top-1 font-heading text-babyblue-600 font-bold text-xs sm:text-right w-20 mb-1 sm:mb-0">
+                                class="sm:absolute sm:right-full sm:mr-4 sm:top-1 font-heading text-babyblue-600 font-bold text-xs sm:text-right sm:w-24 mb-1 sm:mb-0">
                                 12:15 PM
                             </div>
-                            <div class="soft-card p-4 rounded-2xl">
-                                <div class="flex items-center gap-2 mb-0.5">
+                            <div class="soft-card p-4 sm:p-5 rounded-2xl">
+                                <div class="flex items-center gap-2.5 mb-1">
                                     <i class="fas fa-birthday-cake text-pink-400 text-sm" aria-hidden="true"></i>
-                                    <h3 class="font-heading text-base font-bold text-slate-800">
-                                        Grand Feast & Birthday Program
+                                    <h3 class="font-heading text-base font-bold text-slate-900">
+                                        Grand Feast &amp; Birthday Program
                                     </h3>
                                 </div>
-                                <p class="text-slate-600 text-xs">
+                                <p class="text-slate-600 text-xs leading-relaxed">
                                     Buffet lunch, parlor games for kids, cake blowing, and sweet family message.
                                 </p>
                             </div>
@@ -428,17 +455,17 @@
                                 class="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-bear-accent border-2 border-white shadow-sm"
                                 aria-hidden="true"></div>
                             <div
-                                class="sm:absolute sm:-left-28 sm:top-1 font-heading text-babyblue-600 font-bold text-xs sm:text-right w-20 mb-1 sm:mb-0">
+                                class="sm:absolute sm:right-full sm:mr-4 sm:top-1 font-heading text-babyblue-600 font-bold text-xs sm:text-right sm:w-24 mb-1 sm:mb-0">
                                 02:00 PM
                             </div>
-                            <div class="soft-card p-4 rounded-2xl">
-                                <div class="flex items-center gap-2 mb-0.5">
+                            <div class="soft-card p-4 sm:p-5 rounded-2xl">
+                                <div class="flex items-center gap-2.5 mb-1">
                                     <i class="fas fa-gift text-bear-soft text-sm" aria-hidden="true"></i>
-                                    <h3 class="font-heading text-base font-bold text-slate-800">
-                                        Pictorial & Bear Giveaways
+                                    <h3 class="font-heading text-base font-bold text-slate-900">
+                                        Pictorial &amp; Bear Giveaways
                                     </h3>
                                 </div>
-                                <p class="text-slate-600 text-xs">
+                                <p class="text-slate-600 text-xs leading-relaxed">
                                     Group photo session with baby Szhawn Marq and distribution of souvenir gifts.
                                 </p>
                             </div>
@@ -448,19 +475,23 @@
             </section>
 
             <!-- LOCATION -->
-            <section id="location" class="py-14 px-4 relative border-t border-babyblue-200/60 bg-white/40">
+            <section id="location" class="py-16 sm:py-20 px-4 relative bg-white/40">
                 <div class="max-w-3xl mx-auto">
-                    <div class="text-center mb-8 reveal">
-                        <span class="text-babyblue-500 text-xs uppercase tracking-widest font-heading font-bold">
+                    <div class="text-center mb-12 reveal">
+                        <span class="text-babyblue-500 text-[11px] uppercase tracking-[0.22em] font-heading font-bold">
                             Find Your Way
                         </span>
-                        <h2 class="font-heading text-2xl sm:text-3xl font-bold text-slate-800 mt-0.5">
-                            Event Venue & Map
+                        <h2 class="font-heading text-2xl sm:text-3xl font-bold text-slate-900 tracking-[-0.02em] mt-1">
+                            Event Venue &amp; Map
                         </h2>
-                        <p class="text-slate-600 text-xs mt-1">
-                            Holy Cross Parish Church & Reception Hall, Gen. T. de Leon, Valenzuela City
+                        <div class="flex justify-center items-center gap-1 mt-3" aria-hidden="true">
+                            <span class="w-1 h-1 rounded-full bg-babyblue-300"></span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-babyblue-400"></span>
+                            <span class="w-1 h-1 rounded-full bg-babyblue-300"></span>
+                        </div>
+                        <p class="text-slate-600 text-xs mt-3">
+                            Holy Cross Parish Church &amp; Reception Hall, Gen. T. de Leon, Valenzuela City
                         </p>
-                        <div class="w-12 h-1 bg-babyblue-300 mx-auto mt-2 rounded-full" aria-hidden="true"></div>
                     </div>
 
                     <div class="soft-card p-3 rounded-3xl reveal overflow-hidden shadow-md">
@@ -498,28 +529,28 @@
             </section>
 
             <!-- STORY -->
-            <section id="storySection" class="py-14 px-4 relative border-t border-babyblue-200/60">
+            <section id="storySection" class="py-16 sm:py-20 px-4 relative">
                 <div class="max-w-xl mx-auto text-center">
                     <div
-                        class="w-12 h-12 rounded-full bg-bear-honey border border-bear-warm flex items-center justify-center mx-auto mb-2 text-bear-accent text-xl shadow-sm"
+                        class="w-12 h-12 rounded-full bg-bear-honey border border-bear-warm flex items-center justify-center mx-auto mb-3 text-bear-accent shadow-sm"
                         aria-hidden="true">
-                        🧸
+                        <i class="fas fa-paw text-lg"></i>
                     </div>
-                    <span class="text-babyblue-500 text-xs uppercase tracking-widest font-heading font-bold">
-                        A Message From Mommy & Daddy
+                    <span class="text-babyblue-500 text-[11px] uppercase tracking-[0.22em] font-heading font-bold">
+                        A Message From Mommy &amp; Daddy
                     </span>
-                    <h2 class="font-heading text-2xl font-bold text-slate-800 mt-0.5 mb-4">
+                    <h2 class="font-heading text-2xl font-bold text-slate-900 tracking-[-0.02em] mt-1 mb-6">
                         Our Little Bear's Special Day
                     </h2>
 
-                    <div class="soft-card-bear p-6 rounded-3xl text-left relative overflow-hidden shadow-sm">
+                    <div class="soft-card-bear p-7 sm:p-8 rounded-3xl text-left relative overflow-hidden shadow-sm">
                         <i
-                            class="fas fa-quote-left text-bear-honey text-4xl absolute top-3 left-3 opacity-60"
+                            class="fas fa-quote-left text-bear-warm text-5xl absolute top-4 left-4 opacity-70"
                             aria-hidden="true"></i>
 
                         <div
                             id="familyGreetingText"
-                            class="font-sans text-slate-700 text-xs sm:text-sm leading-relaxed font-semibold space-y-3 relative z-10 pt-2">
+                            class="font-sans text-slate-700 text-[14px] sm:text-[15px] leading-[1.75] space-y-4 relative z-10 pt-6">
                             <p>
                                 "From the very moment you came into our lives, our world became brighter, sweeter, and
                                 filled with endless love. Watching you grow, giggle, and reach your milestones over this
@@ -535,27 +566,38 @@
                         </div>
 
                         <div
-                            class="mt-5 pt-3 border-t border-bear-honey flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1 text-xs text-bear-brown font-semibold">
-                            <span class="text-lg text-bear-soft font-bold">With all our love,</span>
-                            <span class="font-heading text-slate-800 font-bold">Mommy & Daddy Resurrection</span>
+                            class="mt-6 pt-5 border-t border-bear-honey/80 flex flex-col sm:flex-row sm:justify-between sm:items-baseline gap-2">
+                            <span class="font-sans italic text-sm text-bear-soft">With all our love,</span>
+                            <span class="font-heading text-slate-900 font-bold text-sm">
+                                Mommy &amp; Daddy Resurrection
+                            </span>
                         </div>
                     </div>
                 </div>
             </section>
 
             <!-- RSVP -->
-            <section id="rsvp" class="py-16 px-4 bg-white/50">
+            <section id="rsvp" class="py-16 sm:py-20 px-4 bg-white/50">
                 <div class="max-w-xl mx-auto">
                     <div
                         class="soft-card p-6 sm:p-8 rounded-3xl relative overflow-hidden reveal border-2 border-babyblue-200">
                         <div class="absolute top-0 left-0 right-0 h-2 bg-babyblue-400" aria-hidden="true"></div>
 
-                        <div class="text-center mb-6">
-                            <span class="text-babyblue-500 text-xs uppercase tracking-widest font-heading font-bold">
+                        <div class="text-center mb-8">
+                            <span
+                                class="text-babyblue-500 text-[11px] uppercase tracking-[0.22em] font-heading font-bold">
                                 Respond To Invitation
                             </span>
-                            <h2 class="font-heading text-2xl sm:text-3xl font-bold text-slate-800 mt-0.5">RSVP</h2>
-                            <p class="text-slate-600 text-xs mt-1">
+                            <h2
+                                class="font-heading text-2xl sm:text-3xl font-bold text-slate-900 tracking-[-0.02em] mt-1">
+                                RSVP
+                            </h2>
+                            <div class="flex justify-center items-center gap-1 mt-3" aria-hidden="true">
+                                <span class="w-1 h-1 rounded-full bg-babyblue-300"></span>
+                                <span class="w-1.5 h-1.5 rounded-full bg-babyblue-400"></span>
+                                <span class="w-1 h-1 rounded-full bg-babyblue-300"></span>
+                            </div>
+                            <p class="text-slate-600 text-xs mt-3">
                                 Please confirm your attendance by November 30, 2026
                             </p>
                         </div>
@@ -573,7 +615,7 @@
                                     name="entry.1000001"
                                     required
                                     autocomplete="name"
-                                    placeholder="e.g. Maria & Juan Santos"
+                                    placeholder="e.g. Maria &amp; Juan Santos"
                                     class="w-full px-3.5 py-3 rounded-2xl border border-babyblue-200 focus:ring-2 focus:ring-babyblue-300 focus:border-babyblue-400 outline-none bg-white text-slate-800 text-xs font-semibold transition-all shadow-sm" />
                             </div>
 
@@ -650,21 +692,38 @@
 
                         <div id="rsvpSuccess" class="hidden text-center py-6" role="status" aria-live="polite">
                             <div
-                                class="w-14 h-14 bg-emerald-100 text-emerald-600 border border-emerald-200 rounded-full flex items-center justify-center mx-auto mb-3 text-xl shadow-sm"
+                                class="w-14 h-14 bg-emerald-50 text-emerald-600 border border-emerald-200 rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm"
                                 aria-hidden="true">
-                                🧸
+                                <i class="fas fa-check text-xl"></i>
                             </div>
-                            <h3 class="font-heading text-xl font-bold text-slate-800 mb-1">Thank You So Much!</h3>
-                            <p class="text-slate-600 text-xs font-medium">Your response has been recorded...</p>
+                            <h3 class="font-heading text-xl font-bold text-slate-900 mb-1">Thank You So Much!</h3>
+                            <p class="text-slate-600 text-xs font-medium">
+                                Your response has been recorded. We look forward to celebrating Szhawn's special day
+                                with you!
+                            </p>
                         </div>
                     </div>
                 </div>
             </section>
 
             <footer class="py-6 text-center text-[11px] text-slate-600 border-t border-babyblue-200/60 font-semibold">
-                <p>Szhawn Marq Resurrection's 1st Birthday &amp; Holy Baptism</p>
+                <p>
+                    Made with
+                    <span class="text-rose-400">♥</span>
+                    for Szhawn Marq Resurrection's 1st Birthday &amp; Holy Baptism
+                </p>
             </footer>
         </main>
+
+        <!-- Floating RSVP CTA — shown after the hero leaves the viewport -->
+        <button
+            id="rsvpPill"
+            type="button"
+            aria-label="Jump to the RSVP form"
+            class="hidden fixed bottom-5 right-4 z-30 items-center gap-2 px-4 py-2.5 bg-slate-900 text-white rounded-full font-heading font-semibold text-xs shadow-lg shadow-slate-900/20 hover:bg-slate-800 active:scale-95 transition-all duration-300">
+            <span>RSVP</span>
+            <i class="fas fa-arrow-down text-[10px]" aria-hidden="true"></i>
+        </button>
 
         <!-- Lock main content while gate is open (removed by main.js) -->
         <script>

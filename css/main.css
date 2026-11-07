@@ -104,7 +104,7 @@
     pointer-events: none;
 }
 
-/* ---------- Medium phones: reduce lift so the letter doesn't crowd the header ---------- */
+/* ---------- Medium phones ---------- */
 @media (max-width: 639px) {
     .envelope.open .letter {
         transform: translateY(-70px);
@@ -114,7 +114,7 @@
     }
 }
 
-/* ---------- Very narrow phones (<360px, e.g. Galaxy Fold outer) ---------- */
+/* ---------- Very narrow phones ---------- */
 @media (max-width: 359px) {
     .envelope {
         width: 280px;
@@ -131,7 +131,7 @@
     }
 }
 
-/* ---------- Countdown: stable digit width ---------- */
+/* ---------- Countdown digit stability ---------- */
 .countdown-value {
     font-variant-numeric: tabular-nums;
 }
