@@ -22,7 +22,7 @@
 		formspreeId: 'PASTE_YOUR_FORMSPREE_ID',
 
 		// Subject of the notification email
-		subject: "RSVP — Szhawn Marq's 1st Birthday and christening",
+		subject: "RSVP — Szhawn Marq's 1st Birthday and christening (Dec 13)",
 
 		// Shown in the mailto: fallback if the POST fails
 		fallbackEmail: 'markbryan.gabriel@gmail.com',
@@ -37,15 +37,20 @@
 	const errorText = document.getElementById('rsvpErrorMessage');
 	const submitBtn = document.getElementById('submitRsvpBtn');
 	const guestCount = document.getElementById('guestCount');
-	const declineRadio = form.querySelector('input[name="entry.1000002"][value="Reject"]');
+	const declineRadio = form.querySelector('input[name="Attendance"][value="Regretfully Declines"]');
 	const honeypot = form.querySelector('input[name="website"]');
 
 	const originalBtnHTML = submitBtn ? submitBtn.innerHTML : '';
 
 	// ---------- Disable guest count when declining ----------
-	form.querySelectorAll('input[name="entry.1000002"]').forEach(radio => {
+	form.querySelectorAll('input[name="Attendance"]').forEach(radio => {
 		radio.addEventListener('change', () => {
-			if (guestCount) guestCount.disabled = !!(declineRadio && declineRadio.checked);
+			if (!guestCount) return;
+			const declining = !!(declineRadio && declineRadio.checked);
+			guestCount.disabled = declining;
+			// Prevent a stale headcount from leaking into a declined RSVP
+			if (declining) guestCount.dataset.previousValue = guestCount.value;
+			else if (guestCount.dataset.previousValue) guestCount.value = guestCount.dataset.previousValue;
 		});
 	});
 
@@ -125,6 +130,7 @@
 			formData.append('access_key', CONFIG.web3formsKey);
 			formData.append('subject', CONFIG.subject);
 			formData.append('from_name', 'Szhawn Marq Invitation');
+			formData.append('replyto', CONFIG.fallbackEmail);
 			formData.append('botcheck', '');
 		}
 
