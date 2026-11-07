@@ -257,32 +257,11 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
-	/* ---------- RSVP (local stub — Batch 4 wires the real endpoint) ---------- */
-	const rsvpForm = document.getElementById('rsvpForm');
-	const rsvpSuccess = document.getElementById('rsvpSuccess');
-	const submitRsvpBtn = document.getElementById('submitRsvpBtn');
-	const guestCount = document.getElementById('guestCount');
-	const declineRadio = rsvpForm.querySelector('input[name="entry.1000002"][value="Reject"]');
-
-	rsvpForm.querySelectorAll('input[name="entry.1000002"]').forEach(radio => {
-		radio.addEventListener('change', () => {
-			guestCount.disabled = declineRadio.checked;
-		});
-	});
-
-	rsvpForm.addEventListener('submit', (e) => {
-		e.preventDefault();
-		submitRsvpBtn.disabled = true;
-		submitRsvpBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Submitting...';
-
-		// TODO (Batch 4): POST to Web3Forms / Formspree and branch on response.
-		setTimeout(() => {
-			rsvpForm.classList.add('hidden');
-			rsvpSuccess.classList.remove('hidden');
-			rsvpSubmitted = true;
-			refreshRsvpPill();
-			launchConfetti();
-		}, 500);
+	/* ---------- RSVP side-effects (logic lives in js/rsvp.js) ---------- */
+	document.addEventListener('rsvp:submitted', () => {
+		rsvpSubmitted = true;
+		refreshRsvpPill();
+		launchConfetti();
 	});
 
 	/* ---------- Hero image fallback ---------- */

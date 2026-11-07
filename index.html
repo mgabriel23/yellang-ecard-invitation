@@ -603,6 +603,14 @@
                         </div>
 
                         <form id="rsvpForm" class="space-y-4">
+                            <!-- Honeypot — hidden from humans, filled by bots. Do not remove. -->
+                            <input
+                                type="text"
+                                name="website"
+                                tabindex="-1"
+                                autocomplete="off"
+                                class="hidden"
+                                aria-hidden="true" />
                             <div>
                                 <label
                                     for="guestName"
@@ -702,6 +710,38 @@
                                 with you!
                             </p>
                         </div>
+
+                        <div
+                            id="rsvpError"
+                            class="hidden mt-4 rounded-2xl border border-rose-200 bg-rose-50 p-4 text-left"
+                            role="alert"
+                            aria-live="assertive">
+                            <div class="flex items-start gap-2.5">
+                                <i
+                                    class="fas fa-exclamation-circle text-rose-500 text-sm mt-0.5"
+                                    aria-hidden="true"></i>
+                                <div class="flex-1">
+                                    <p class="font-heading text-xs font-bold text-rose-700">Submission failed</p>
+                                    <p id="rsvpErrorMessage" class="text-[11px] text-rose-600 mt-0.5 leading-relaxed">
+                                        Something went wrong. Please try again.
+                                    </p>
+                                    <div class="mt-3 flex flex-wrap gap-2">
+                                        <button
+                                            type="button"
+                                            id="rsvpRetryBtn"
+                                            class="px-3 py-1.5 rounded-full bg-rose-500 hover:bg-rose-600 text-white font-heading font-semibold text-[11px] transition-all active:scale-95">
+                                            Try Again
+                                        </button>
+                                        <a
+                                            id="rsvpMailtoFallback"
+                                            href="#"
+                                            class="hidden px-3 py-1.5 rounded-full bg-white border border-rose-200 text-rose-700 font-heading font-semibold text-[11px] hover:bg-rose-100 transition-all">
+                                            Email Us Instead
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -731,5 +771,6 @@
         </script>
 
         <script src="js/main.js" defer></script>
+        <script src="js/rsvp.js" defer></script>
     </body>
 </html>
