@@ -1,44 +1,8 @@
 /* =========================================================
    Szhawn Marq Invitation — pure CSS stylesheet
    No Tailwind, no build step, no third-party CSS.
+   Theme values live in tokens.css — edit that file to retheme.
    ========================================================= */
-
-/* ---------- Design tokens ---------- */
-:root {
-    --babyblue-50: #f0f9ff;
-    --babyblue-100: #e0f2fe;
-    --babyblue-200: #bae6fd;
-    --babyblue-300: #7dd3fc;
-    --babyblue-400: #38bdf8;
-    --babyblue-500: #0284c7;
-    --babyblue-600: #0369a1;
-
-    --bear-honey: #fef3c7;
-    --bear-warm: #fde68a;
-    --bear-accent: #f59e0b;
-    --bear-brown: #92400e;
-    --bear-soft: #b45309;
-    --bear-dark: #78350f;
-
-    --slate-400: #94a3b8;
-    --slate-500: #64748b;
-    --slate-600: #475569;
-    --slate-700: #334155;
-    --slate-800: #1e293b;
-    --slate-900: #0f172a;
-
-    --rose-400: #fb7185;
-    --rose-500: #f43f5e;
-    --rose-600: #e11d48;
-    --rose-700: #be123c;
-
-    --emerald-50: #ecfdf5;
-    --emerald-200: #a7f3d0;
-    --emerald-600: #059669;
-
-    --amber-300: #fcd34d;
-    --pink-400: #f472b6;
-}
 
 /* ---------- Reset / base ---------- */
 *,
@@ -57,9 +21,9 @@ body {
     background-image: radial-gradient(var(--babyblue-200) 1.5px, transparent 1.5px);
     background-size: 24px 24px;
     color: var(--slate-700);
-    font-family: 'Nunito', sans-serif;
-    font-size: 16px;
-    line-height: 1.5;
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+    line-height: var(--lh-base);
     min-height: 100vh;
     position: relative;
     overflow-x: hidden;
@@ -108,19 +72,19 @@ a {
 .soft-card {
     background: #ffffff;
     border: 2px solid var(--babyblue-100);
-    box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.08);
+    box-shadow: var(--shadow-card-blue);
 }
 
 .soft-card-bear {
     background: #ffffff;
     border: 2px solid var(--bear-honey);
-    box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.1);
+    box-shadow: var(--shadow-card-bear);
 }
 
 /* ---------- Main content fade ---------- */
 #mainContent {
     opacity: 0;
-    transition: opacity 0.7s;
+    transition: opacity var(--dur-slow);
 }
 #mainContent.is-visible {
     opacity: 1;
@@ -131,26 +95,24 @@ a {
     position: fixed;
     top: 1.25rem;
     right: 1.25rem;
-    z-index: 40;
+    z-index: var(--z-audio);
 }
 
 .audio-btn {
     width: 3rem;
     height: 3rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     background: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px solid var(--babyblue-200);
-    box-shadow:
-        0 4px 6px -1px rgba(0, 0, 0, 0.1),
-        0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-md);
     color: var(--slate-500);
     cursor: pointer;
     transition:
-        transform 0.3s,
-        color 0.2s;
+        transform var(--dur-base),
+        color var(--dur-fast);
 }
 
 .audio-btn:hover {
@@ -170,7 +132,7 @@ a {
 .gate {
     position: fixed;
     inset: 0;
-    z-index: 50;
+    z-index: var(--z-gate);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -180,7 +142,7 @@ a {
     -webkit-backdrop-filter: blur(4px);
     padding: 2rem 1rem;
     overflow-y: auto;
-    transition: opacity 0.7s;
+    transition: opacity var(--dur-slow);
 }
 
 .gate__header {
@@ -193,17 +155,17 @@ a {
     align-items: center;
     gap: 0.375rem;
     padding: 0.375rem 1rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     background: var(--bear-honey);
     color: var(--bear-brown);
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-size: 0.75rem;
     font-weight: 600;
     border: 1px solid var(--bear-warm);
 }
 
 .gate__title {
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.875rem;
     color: var(--babyblue-600);
     font-weight: 700;
@@ -225,17 +187,17 @@ a {
     align-items: center;
     gap: 0.625rem;
     padding: 0.875rem 1.75rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     background: var(--babyblue-500);
     color: #ffffff;
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-weight: 600;
     font-size: 0.875rem;
     letter-spacing: 0.025em;
     border: 1px solid var(--babyblue-400);
-    box-shadow: 0 10px 15px -3px rgba(125, 211, 252, 0.4);
+    box-shadow: var(--shadow-btn-primary);
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all var(--dur-base);
 }
 .gate__btn:hover {
     background: var(--babyblue-600);
@@ -245,7 +207,7 @@ a {
     transform: scale(0.95);
 }
 .gate__btn .fa-envelope-open {
-    transition: transform 0.2s;
+    transition: transform var(--dur-fast);
 }
 .gate__btn:hover .fa-envelope-open {
     transform: rotate(12deg);
@@ -291,7 +253,7 @@ a {
     height: 210px;
     background: var(--babyblue-100);
     border-radius: 18px;
-    box-shadow: 0 16px 32px rgba(2, 132, 199, 0.12);
+    box-shadow: var(--shadow-envelope);
     transform-style: preserve-3d;
     transition: transform 0.6s ease;
     border: 2.5px solid var(--babyblue-300);
@@ -306,7 +268,7 @@ a {
     background: var(--babyblue-200);
     clip-path: polygon(0 0, 100% 0, 50% 100%);
     transform-origin: top;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.8s var(--ease-smooth);
     z-index: 3;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
@@ -327,14 +289,14 @@ a {
     border-radius: 12px;
     padding: 50px 14px 16px;
     z-index: 2;
-    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+    transition: transform 0.8s var(--ease-smooth) 0.3s;
     border: 2px dashed var(--babyblue-200);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
     text-align: center;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
 }
 
 .envelope.open .letter {
@@ -372,7 +334,7 @@ a {
 .letter__icon {
     width: 2.25rem;
     height: 2.25rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     background: var(--babyblue-100);
     display: flex;
     align-items: center;
@@ -387,7 +349,7 @@ a {
 
 .letter__name {
     display: block;
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     color: var(--slate-800);
     font-weight: 700;
     font-size: 0.75rem;
@@ -407,7 +369,7 @@ a {
     height: 2px;
     background: var(--babyblue-200);
     margin: 0.375rem 0;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
 }
 
 .letter__cta {
@@ -465,7 +427,7 @@ a {
 }
 
 .hero__inner {
-    max-width: 48rem;
+    max-width: var(--container-wide);
     margin-inline: auto;
     text-align: center;
     position: relative;
@@ -477,15 +439,15 @@ a {
     align-items: center;
     gap: 0.625rem;
     padding: 0.5rem 1rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     background: #ffffff;
     color: var(--bear-brown);
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-size: 0.75rem;
     font-weight: 600;
     border: 1px solid var(--bear-warm);
     margin-bottom: 1.5rem;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
 }
 .hero__badge-sep {
     color: var(--bear-accent);
@@ -502,7 +464,7 @@ a {
 }
 
 .hero__title {
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-size: 2.25rem;
     font-weight: 700;
     color: var(--slate-900);
@@ -532,9 +494,9 @@ a {
 .hero__ear {
     position: absolute;
     background: var(--bear-warm);
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     border: 4px solid #ffffff;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
     z-index: 0;
 }
 .hero__ear--outer-left {
@@ -573,12 +535,10 @@ a {
     z-index: 10;
     width: 12rem;
     height: 12rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     padding: 0.5rem;
     background: #ffffff;
-    box-shadow:
-        0 4px 6px -1px rgba(0, 0, 0, 0.1),
-        0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-md);
     margin-inline: auto;
     border: 4px solid var(--babyblue-200);
 }
@@ -587,7 +547,7 @@ a {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
     display: block;
 }
@@ -600,16 +560,14 @@ a {
     background: var(--babyblue-500);
     color: #ffffff;
     padding: 0.25rem 0.875rem;
-    border-radius: 9999px;
-    box-shadow:
-        0 4px 6px -1px rgba(0, 0, 0, 0.1),
-        0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    border-radius: var(--radius-full);
+    box-shadow: var(--shadow-md);
     border: 2px solid #ffffff;
     z-index: 20;
     display: flex;
     align-items: center;
     gap: 0.375rem;
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-size: 0.75rem;
     font-weight: 600;
 }
@@ -632,7 +590,7 @@ a {
     color: var(--slate-600);
     font-weight: 600;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color var(--dur-fast);
 }
 .hero__scroll-link:hover {
     color: var(--babyblue-500);
@@ -686,7 +644,7 @@ a {
     margin: 2rem auto 0;
     max-width: 32rem;
     padding: 1.25rem;
-    border-radius: 1.5rem;
+    border-radius: var(--radius-lg);
     position: relative;
 }
 
@@ -707,7 +665,7 @@ a {
 .info-card__icon {
     width: 2.5rem;
     height: 2.5rem;
-    border-radius: 1rem;
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -755,18 +713,18 @@ a {
     background: var(--babyblue-50);
     border: 1px solid var(--babyblue-200);
     color: var(--babyblue-600);
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-weight: 600;
-    border-radius: 1rem;
+    border-radius: var(--radius-md);
     font-size: 0.75rem;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
     cursor: pointer;
     transition:
-        background 0.2s,
+        background var(--dur-fast),
         transform 0.1s;
 }
 .info-card__cta:hover {
@@ -811,16 +769,16 @@ a {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0.5rem;
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
 }
 
 .countdown__cell {
     background: #ffffff;
     padding: 0.625rem;
-    border-radius: 1rem;
+    border-radius: var(--radius-md);
     border: 1px solid var(--babyblue-200);
     text-align: center;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
 }
 
 .countdown__value {
@@ -841,16 +799,16 @@ a {
 }
 
 .countdown__live {
-    border-radius: 1rem;
+    border-radius: var(--radius-md);
     background: #ffffff;
     border: 1px solid var(--babyblue-200);
     padding: 1rem 1.25rem;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
     text-align: center;
 }
 
 .countdown__live-title {
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.125rem;
     font-weight: 700;
     color: var(--babyblue-600);
@@ -891,11 +849,11 @@ a {
 }
 
 .section__inner {
-    max-width: 48rem;
+    max-width: var(--container-wide);
     margin-inline: auto;
 }
 .section__inner--narrow {
-    max-width: 36rem;
+    max-width: var(--container-narrow);
 }
 
 .section__header {
@@ -908,12 +866,12 @@ a {
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.22em;
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-weight: 700;
 }
 
 .section__title {
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.5rem;
     font-weight: 700;
     color: var(--slate-900);
@@ -932,7 +890,7 @@ a {
 .section__dot {
     width: 0.25rem;
     height: 0.25rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     background: var(--babyblue-300);
     display: block;
 }
@@ -979,9 +937,9 @@ a {
     top: 0.375rem;
     width: 1rem;
     height: 1rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     border: 2px solid #ffffff;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
 }
 .timeline__dot--blue {
     background: var(--babyblue-400);
@@ -991,7 +949,7 @@ a {
 }
 
 .timeline__time {
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     color: var(--babyblue-600);
     font-weight: 700;
     font-size: 0.75rem;
@@ -1000,7 +958,7 @@ a {
 
 .timeline__card {
     padding: 1rem;
-    border-radius: 1rem;
+    border-radius: var(--radius-md);
 }
 
 .timeline__card-head {
@@ -1027,7 +985,7 @@ a {
 }
 
 .timeline__card-title {
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-size: 1rem;
     font-weight: 700;
     color: var(--slate-900);
@@ -1063,17 +1021,15 @@ a {
 /* ---------- Venue ---------- */
 .venue {
     padding: 0.75rem;
-    border-radius: 1.5rem;
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    box-shadow:
-        0 4px 6px -1px rgba(0, 0, 0, 0.1),
-        0 2px 4px -2px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-md);
 }
 
 .venue__map {
     width: 100%;
     height: 18rem;
-    border-radius: 1rem;
+    border-radius: var(--radius-md);
     overflow: hidden;
     border: 1px solid var(--babyblue-100);
     position: relative;
@@ -1091,21 +1047,21 @@ a {
     display: grid;
     grid-template-columns: 1fr;
     gap: 0.5rem;
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-weight: 600;
     font-size: 0.75rem;
 }
 
 .venue__btn {
     padding: 0.625rem 1rem;
-    border-radius: 0.75rem;
+    border-radius: var(--radius-sm);
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    transition: background 0.2s;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: background var(--dur-fast);
+    box-shadow: var(--shadow-sm);
     text-decoration: none;
 }
 .venue__btn--primary {
@@ -1144,7 +1100,7 @@ a {
 .story__avatar {
     width: 3rem;
     height: 3rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     background: var(--bear-honey);
     border: 1px solid var(--bear-warm);
     display: flex;
@@ -1152,7 +1108,7 @@ a {
     justify-content: center;
     margin: 0 auto 0.75rem;
     color: var(--bear-accent);
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
 }
 .story__avatar i {
     font-size: 1.125rem;
@@ -1164,11 +1120,11 @@ a {
 
 .story__card {
     padding: 1.75rem;
-    border-radius: 1.5rem;
+    border-radius: var(--radius-lg);
     text-align: left;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
 }
 
 .story__quote-mark {
@@ -1215,7 +1171,7 @@ a {
 }
 
 .story__who {
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     color: var(--slate-900);
     font-weight: 700;
     font-size: 0.875rem;
@@ -1238,7 +1194,7 @@ a {
 /* ---------- RSVP ---------- */
 .rsvp__card {
     padding: 1.5rem;
-    border-radius: 1.5rem;
+    border-radius: var(--radius-lg);
     position: relative;
     overflow: hidden;
     border: 2px solid var(--babyblue-200);
@@ -1273,7 +1229,7 @@ a {
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-weight: 700;
     color: var(--slate-700);
     margin-bottom: 0.375rem;
@@ -1284,7 +1240,7 @@ a {
 .rsvp__textarea {
     width: 100%;
     padding: 0.75rem 0.875rem;
-    border-radius: 1rem;
+    border-radius: var(--radius-md);
     border: 1px solid var(--babyblue-200);
     background: #ffffff;
     color: var(--slate-800);
@@ -1292,10 +1248,10 @@ a {
     font-weight: 600;
     font-family: inherit;
     outline: none;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
     transition:
-        border-color 0.2s,
-        box-shadow 0.2s;
+        border-color var(--dur-fast),
+        box-shadow var(--dur-fast);
 }
 
 .rsvp__input:focus,
@@ -1345,14 +1301,14 @@ a {
     justify-content: center;
     gap: 0.375rem;
     padding: 0.75rem;
-    border-radius: 1rem;
+    border-radius: var(--radius-md);
     border: 1px solid var(--babyblue-200);
     text-align: center;
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-weight: 700;
     font-size: 0.75rem;
-    transition: all 0.2s;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    transition: all var(--dur-fast);
+    box-shadow: var(--shadow-sm);
     background: #ffffff;
 }
 
@@ -1393,17 +1349,17 @@ a {
 .rsvp__submit {
     width: 100%;
     padding: 0.875rem 0;
-    border-radius: 1rem;
+    border-radius: var(--radius-md);
     background: var(--babyblue-500);
     color: #ffffff;
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-weight: 700;
     font-size: 0.875rem;
     letter-spacing: 0.025em;
     border: 1px solid var(--babyblue-400);
-    box-shadow: 0 4px 6px -1px rgba(186, 230, 253, 0.6);
+    box-shadow: var(--shadow-btn-subtle);
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all var(--dur-base);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1432,19 +1388,19 @@ a {
     background: var(--emerald-50);
     color: var(--emerald-600);
     border: 1px solid var(--emerald-200);
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 1rem;
-    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-sm);
 }
 .rsvp__success-icon i {
     font-size: 1.25rem;
 }
 
 .rsvp__success-title {
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--slate-900);
@@ -1459,7 +1415,7 @@ a {
 
 .rsvp__error {
     margin-top: 1rem;
-    border-radius: 1rem;
+    border-radius: var(--radius-md);
     border: 1px solid #fecdd3;
     background: #fff1f2;
     padding: 1rem;
@@ -1483,7 +1439,7 @@ a {
 }
 
 .rsvp__error-title {
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-size: 0.75rem;
     font-weight: 700;
     color: var(--rose-700);
@@ -1505,15 +1461,15 @@ a {
 
 .rsvp__error-btn {
     padding: 0.375rem 0.75rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     background: var(--rose-500);
     color: #ffffff;
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-weight: 600;
     font-size: 11px;
     border: 0;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all var(--dur-fast);
 }
 .rsvp__error-btn:hover {
     background: var(--rose-600);
@@ -1524,15 +1480,15 @@ a {
 
 .rsvp__error-link {
     padding: 0.375rem 0.75rem;
-    border-radius: 9999px;
+    border-radius: var(--radius-full);
     background: #ffffff;
     border: 1px solid #fecdd3;
     color: var(--rose-700);
-    font-family: 'Fredoka', sans-serif;
+    font-family: var(--font-display);
     font-weight: 600;
     font-size: 11px;
     text-decoration: none;
-    transition: background 0.2s;
+    transition: background var(--dur-fast);
 }
 .rsvp__error-link:hover {
     background: #fff1f2;
@@ -1562,22 +1518,22 @@ a {
     position: fixed;
     bottom: 1.25rem;
     right: 1rem;
-    z-index: 30;
+    z-index: var(--z-pill);
     display: none;
     align-items: center;
     gap: 0.5rem;
     padding: 0.625rem 1rem;
     background: var(--slate-900);
     color: #ffffff;
-    border-radius: 9999px;
-    font-family: 'Fredoka', sans-serif;
+    border-radius: var(--radius-full);
+    font-family: var(--font-display);
     font-weight: 600;
     font-size: 0.75rem;
     border: 0;
     cursor: pointer;
-    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.2);
+    box-shadow: var(--shadow-pill);
     transition:
-        background 0.2s,
+        background var(--dur-fast),
         transform 0.1s;
 }
 .rsvp-pill.is-visible {
@@ -1598,8 +1554,8 @@ a {
     opacity: 0;
     transform: translateY(24px);
     transition:
-        opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        opacity var(--dur-slow) var(--ease-out),
+        transform var(--dur-slow) var(--ease-out);
 }
 .reveal.active {
     opacity: 1;
