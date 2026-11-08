@@ -53,11 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	function updateAudioUI() {
 		if (isPlaying) {
-			audioIcon.className = 'fas fa-music text-lg text-babyblue-500';
+			audioIcon.className = 'fas fa-music';
+			toggleAudioBtn.classList.add('is-playing');
 			toggleAudioBtn.setAttribute('aria-label', 'Pause background music');
 			toggleAudioBtn.setAttribute('aria-pressed', 'true');
 		} else {
-			audioIcon.className = 'fas fa-volume-mute text-lg text-slate-500';
+			audioIcon.className = 'fas fa-volume-mute';
+			toggleAudioBtn.classList.remove('is-playing');
 			toggleAudioBtn.setAttribute('aria-label', 'Play background music');
 			toggleAudioBtn.setAttribute('aria-pressed', 'false');
 		}
@@ -92,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			envelopeGate.classList.add('opacity-0');
 			setTimeout(() => {
 				envelopeGate.style.display = 'none';
-				mainContent.classList.remove('opacity-0');
+				mainContent.classList.add('is-visible');
 				mainContent.inert = false;
 				document.body.style.overflow = '';
 				startScrollReveal();
@@ -229,8 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	function refreshRsvpPill() {
 		if (!rsvpPill) return;
 		const show = !rsvpSubmitted && pillHeroSeen && !pillRsvpInView;
-		rsvpPill.classList.toggle('hidden', !show);
-		rsvpPill.classList.toggle('flex', show);
+		rsvpPill.classList.toggle('is-visible', show);
 	}
 
 	function startRsvpPillTracking() {

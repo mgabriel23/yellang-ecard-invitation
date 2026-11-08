@@ -1,18 +1,18 @@
 # Szhawn Marq's 1st Birthday & Christening
 
-Static single-page e-card. No backend, no build step required for dev.
+Static single-page e-card. No backend, no build step. Hosted on GitHub Pages.
 
 ## Structure
 
 - `index.html` — markup only
-- `css/main.css` — custom components + reduced-motion safety net
+- `css/main.css` — the entire stylesheet, hand-written, no preprocessor
 - `js/main.js` — page behaviour (envelope gate, audio, countdown, calendar, reveals, floating RSVP pill)
 - `js/rsvp.js` — RSVP form submission (Web3Forms / Formspree, with retry + `mailto:` fallback)
 - `robots.txt` — keeps the invite out of search engines
 - `.nojekyll` — required for GitHub Pages (empty file)
 - `assets/img/szhawn.jpg` — hero photo (you provide)
 - `assets/img/og-preview.jpg` — 1200×630 social preview (you provide)
-- `assets/audio/lullaby.mp3` — background music (you provide; or keep the Pixabay hotlink for now)
+- `assets/audio/lullaby.mp3` — background music (optional; falls back to Pixabay hotlink if absent)
 
 ## Local preview
 
