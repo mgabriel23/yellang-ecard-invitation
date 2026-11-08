@@ -4,7 +4,6 @@
    ========================================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
-
 	/* ---------- Config ---------- */
 	const EVENT_DATE_ISO = '2026-12-13T10:00:00+08:00'; // PHT (GMT+8)
 	const EVENT_TITLE = "Szhawn Marq's 1st Birthday & Holy Baptism";
@@ -14,7 +13,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	const EVENT_END = '20261213T150000';
 
 	/* ---------- Refs ---------- */
+	const splashScreen = document.getElementById('splashScreen');
 	const envelopeGate = document.getElementById('envelopeGate');
+	const bearSeal = document.querySelector('.bear-seal');
 	const envelope = document.getElementById('envelope');
 	const openBtn = document.getElementById('openBtn');
 	const mainContent = document.getElementById('mainContent');
@@ -33,8 +34,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+	/* ---------- Audio Volume Control ---------- */
+	const TARGET_VOLUME = 0.45; // 45% volume (adjust between 0.3 and 0.6 as needed)
+	let fadeInterval;
+
 	let isPlaying = false;
 	let rsvpSubmitted = false;
+
+	// Force the browser to always start at the top on refresh
+	if ('scrollRestoration' in history) {
+		history.scrollRestoration = 'manual';
+	}
 
 	/* ---------- Scroll lock while gate is open ---------- */
 	document.body.style.overflow = 'hidden';
@@ -65,6 +75,31 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 	}
 
+	function fadeAudio(audioElement, targetVol, duration) {
+		clearInterval(fadeInterval);
+		const startVol = audioElement.volume;
+		const steps = 30; // 30 frames for smoothness
+		const stepTime = duration / steps;
+		const volStep = (targetVol - startVol) / steps;
+		let currentStep = 0;
+
+		fadeInterval = setInterval(() => {
+			currentStep++;
+			let newVol = startVol + (volStep * currentStep);
+			// Clamp between 0 and 1
+			if (newVol < 0) newVol = 0;
+			if (newVol > 1) newVol = 1;
+			audioElement.volume = newVol;
+
+			if (currentStep >= steps) {
+				clearInterval(fadeInterval);
+				if (targetVol === 0) {
+					audioElement.pause(); // Pause only after fade out is done
+				}
+			}
+		}, stepTime);
+	}
+
 	function showToast(message) {
 		const toast = document.createElement('div');
 		toast.textContent = message;
@@ -75,45 +110,86 @@ document.addEventListener('DOMContentLoaded', () => {
 		setTimeout(() => { toast.remove(); }, 2400);
 	}
 
-	/* ---------- Gate / envelope ---------- */
-	function openInvitation() {
-		envelope.classList.add('open');
+	/* ---------- Premium Splash Screen ---------- */
+	// Wait for fonts to be fully loaded before showing the splash screen
+	document.fonts.ready.then(() => {
+		if (splashScreen) {
+			splashScreen.style.opacity = '1';
 
+			setTimeout(() => {
+				splashScreen.classList.add('fade-out');
+
+				// Wait for splash fade-out, then reveal the gate
+				setTimeout(() => {
+					splashScreen.style.display = 'none';
+					envelopeGate.classList.add('is-revealed'); // Fades the gate in
+				}, 600);
+			}, 2000); // 2 seconds
+		}
+	});
+
+	/* ---------- Gate / envelope transition ---------- */
+	function openInvitation() {
+		// 1. Trigger the star spin animation
+		if (bearSeal) {
+			bearSeal.classList.add('is-spinning');
+		}
+
+		// 2. Start playing the audio with a smooth fade-in
+		bgAudio.volume = 0; // Start silent
 		bgAudio.play().then(() => {
 			isPlaying = true;
 			audioControl.classList.remove('hidden');
 			updateAudioUI();
+			fadeAudio(bgAudio, TARGET_VOLUME, 1500); // Fade to 45% over 1.5 seconds
 		}).catch(() => {
 			audioControl.classList.remove('hidden');
 			updateAudioUI();
 		});
 
-		setTimeout(launchConfetti, 350);
-
+		// 3. Fire confetti almost immediately (0.2s into the spin)
 		setTimeout(() => {
-			envelopeGate.classList.add('opacity-0');
+			launchConfetti();
+		}, 200);
+
+		// 4. Trigger the cinematic scene transition right as the star finishes spinning (0.5s)
+		setTimeout(() => {
+			envelopeGate.classList.remove('is-revealed');
+			envelopeGate.classList.add('is-hidden');
+
+			// Force scroll to top BEFORE revealing the main content
+			window.scrollTo(0, 0);
+
+			mainContent.classList.add('is-visible');
+			mainContent.inert = false;
+			document.body.style.overflow = '';
+
+			// 5. Clean up once the 0.6s CSS transition is complete
 			setTimeout(() => {
 				envelopeGate.style.display = 'none';
-				mainContent.classList.add('is-visible');
-				mainContent.inert = false;
-				document.body.style.overflow = '';
 				startScrollReveal();
 				startRsvpPillTracking();
-			}, 700);
-		}, 1100);
+			}, 650); // Slightly longer than the 0.6s CSS transition
+
+		}, 500);
 	}
 
 	openBtn.addEventListener('click', openInvitation);
 
 	/* ---------- Audio toggle ---------- */
+	/* ---------- Audio toggle ---------- */
 	toggleAudioBtn.addEventListener('click', () => {
 		if (isPlaying) {
-			bgAudio.pause();
 			isPlaying = false;
+			updateAudioUI();
+			fadeAudio(bgAudio, 0, 500); // Fade out over 0.5s, then pause automatically
 		} else {
-			bgAudio.play().then(() => { isPlaying = true; }).catch(() => { });
+			isPlaying = true;
+			updateAudioUI();
+			bgAudio.play().then(() => {
+				fadeAudio(bgAudio, TARGET_VOLUME, 1000); // Fade in over 1s
+			}).catch(() => { });
 		}
-		updateAudioUI();
 	});
 
 	/* ---------- Add to calendar (.ics) ---------- */
@@ -271,5 +347,82 @@ document.addEventListener('DOMContentLoaded', () => {
 			heroPhoto.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23E0F2FE'/%3E%3Ctext x='200' y='210' font-family='sans-serif' font-size='26' fill='%230284C7' text-anchor='middle'%3ESzhawn Marq%3C/text%3E%3C/svg%3E";
 		}, { once: true });
 	}
+	/* ---------- Native App: Keyboard & Input Handling ---------- */
+	const formInputs = document.querySelectorAll('.rsvp__input, .rsvp__select, .rsvp__textarea');
 
+	formInputs.forEach(input => {
+		// When user taps an input, wait for keyboard to open, then scroll into view
+		input.addEventListener('focus', (e) => {
+			// Hide floating RSVP pill so it doesn't cover the keyboard
+			if (rsvpPill) rsvpPill.classList.remove('is-visible');
+
+			// Scroll the input into view (100px offset for breathing room)
+			setTimeout(() => {
+				const yOffset = -120;
+				const y = e.target.getBoundingClientRect().top + window.scrollY + yOffset;
+				window.scrollTo({ top: y, behavior: 'smooth' });
+			}, 300); // 300ms wait for iOS/Android keyboard animation
+		});
+
+		// When user taps away (keyboard closes), restore the floating pill
+		input.addEventListener('blur', () => {
+			refreshRsvpPill();
+		});
+	});
+
+	/* ---------- Custom Select Dropdown Logic ---------- */
+	const guestDropdown = document.getElementById('guestDropdown');
+	const guestTrigger = guestDropdown?.querySelector('.custom-select__trigger');
+	const guestOptions = guestDropdown?.querySelectorAll('.custom-select__option');
+	const guestSelectValue = document.getElementById('guestSelectValue');
+	const nativeGuestSelect = document.getElementById('guestCount');
+
+	if (guestDropdown && guestTrigger && nativeGuestSelect) {
+		// Toggle open/close
+		guestTrigger.addEventListener('click', () => {
+			if (!guestDropdown.classList.contains('is-disabled')) {
+				guestDropdown.classList.toggle('open');
+			}
+		});
+
+		// Handle option selection
+		guestOptions.forEach(option => {
+			option.addEventListener('click', () => {
+				// 1. Remove selected class from all
+				guestOptions.forEach(opt => opt.classList.remove('is-selected'));
+
+				// 2. Add to clicked
+				option.classList.add('is-selected');
+
+				// 3. Update visual text
+				const value = option.getAttribute('data-value');
+				guestSelectValue.textContent = value;
+
+				// 4. Update hidden select (so rsvp.js catches it)
+				nativeGuestSelect.value = value;
+				nativeGuestSelect.dispatchEvent(new Event('change'));
+
+				// 5. Close dropdown
+				guestDropdown.classList.remove('open');
+			});
+		});
+
+		// Close when clicking outside
+		document.addEventListener('click', (e) => {
+			if (!guestDropdown.contains(e.target)) {
+				guestDropdown.classList.remove('open');
+			}
+		});
+
+		// Sync disabled state from the hidden select to the visual trigger
+		// (rsvp.js disables the select when user declines)
+		const observer = new MutationObserver(() => {
+			if (nativeGuestSelect.disabled) {
+				guestDropdown.classList.add('is-disabled');
+			} else {
+				guestDropdown.classList.remove('is-disabled');
+			}
+		});
+		observer.observe(nativeGuestSelect, { attributes: true, attributeFilter: ['disabled'] });
+	}
 });

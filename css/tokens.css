@@ -1,33 +1,31 @@
 /* =========================================================
-   Szhawn Marq Invitation — Design Tokens
-   Single source of truth for all theme values.
-   Change a token here, the whole invitation follows.
+   Szhawn Marq Invitation — Design Tokens (Grimace Party Theme)
    ========================================================= */
 
 :root {
     /* ==========================================================
-       1. COLOR — Brand: Baby Blue (primary)
+       1. COLOR — Primary: Deep Grimace Purple (Backgrounds & Borders)
        ========================================================== */
-    --babyblue-50: #f0f9ff;
-    --babyblue-100: #e0f2fe;
-    --babyblue-200: #bae6fd;
-    --babyblue-300: #7dd3fc;
-    --babyblue-400: #38bdf8;
-    --babyblue-500: #0284c7;
-    --babyblue-600: #0369a1;
+    --babyblue-50: #3b0764; /* Very dark purple (Page background) */
+    --babyblue-100: #581c87; /* Dark purple (Gate background) */
+    --babyblue-200: #7e22ce; /* Mid purple (Borders) */
+    --babyblue-300: #9333ea; /* Bright purple (Accents) */
+    --babyblue-400: #a855f7; /* Grimace Body */
+    --babyblue-500: #c084fc; /* Light Grimace Purple */
+    --babyblue-600: #e9d5ff; /* Very light purple (Text on dark) */
 
     /* ==========================================================
-       2. COLOR — Brand: Bear / Honey (accent)
+       2. COLOR — Secondary: McDonald's Yellow (Text, Buttons, Arches)
        ========================================================== */
-    --bear-honey: #fef3c7;
-    --bear-warm: #fde68a;
-    --bear-accent: #f59e0b;
-    --bear-soft: #b45309;
-    --bear-brown: #92400e;
-    --bear-dark: #78350f;
+    --bear-honey: #fef08a; /* Light Yellow */
+    --bear-warm: #ffc72c; /* McDonald's Golden Yellow */
+    --bear-accent: #ffbc0d; /* Darker Yellow */
+    --bear-soft: #ffc72c; /* Yellow (used for taglines) */
+    --bear-brown: #3b0764; /* Dark Purple (Text on Yellow buttons) */
+    --bear-dark: #2e0661; /* Darkest Purple */
 
     /* ==========================================================
-       3. COLOR — Neutrals: Slate
+       3. COLOR — Neutrals: Slate (Text inside White Cards)
        ========================================================== */
     --slate-400: #94a3b8;
     --slate-500: #64748b;
@@ -37,15 +35,15 @@
     --slate-900: #0f172a;
 
     /* ==========================================================
-       4. COLOR — Status: Rose (decline / error)
+       4. COLOR — Status: Red (Fries Box / Errors)
        ========================================================== */
-    --rose-400: #fb7185;
-    --rose-500: #f43f5e;
-    --rose-600: #e11d48;
-    --rose-700: #be123c;
+    --rose-400: #f87171;
+    --rose-500: #ef4444;
+    --rose-600: #dc2626;
+    --rose-700: #b91c1c;
 
     /* ==========================================================
-       5. COLOR — Status: Emerald (success)
+       5. COLOR — Status: Emerald (Success)
        ========================================================== */
     --emerald-50: #ecfdf5;
     --emerald-200: #a7f3d0;
@@ -66,30 +64,30 @@
     --lh-base: 1.5;
 
     /* ==========================================================
-       8. RADII
+       8. RADII (Bubbly, chunky shapes)
        ========================================================== */
-    --radius-sm: 0.75rem;
-    --radius-md: 1rem;
-    --radius-lg: 1.5rem;
+    --radius-sm: 1rem;
+    --radius-md: 1.5rem;
+    --radius-lg: 2rem;
     --radius-full: 9999px;
 
     /* ==========================================================
-       9. SHADOWS
+       9. SHADOWS (Dark theme needs heavier shadows)
        ========================================================== */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+    --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
 
-    /* Semantic shadows — tinted to the palette */
-    --shadow-card-blue: 0 10px 25px -5px rgba(2, 132, 199, 0.08);
-    --shadow-card-bear: 0 10px 25px -5px rgba(245, 158, 11, 0.1);
-    --shadow-btn-primary: 0 10px 15px -3px rgba(125, 211, 252, 0.4);
-    --shadow-btn-subtle: 0 4px 6px -1px rgba(186, 230, 253, 0.6);
-    --shadow-pill: 0 10px 15px -3px rgba(15, 23, 42, 0.2);
-    --shadow-envelope: 0 16px 32px rgba(2, 132, 199, 0.12);
+    /* Semantic shadows */
+    --shadow-card-blue: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    --shadow-card-bear: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    --shadow-btn-primary: 0 8px 15px -3px rgba(255, 199, 44, 0.4); /* Yellow glow */
+    --shadow-btn-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+    --shadow-pill: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    --shadow-envelope: 0 16px 32px rgba(0, 0, 0, 0.4);
 
     /* ==========================================================
-       10. Z-INDEX SCALE (fixed / overlay layers only)
+       10. Z-INDEX SCALE
        ========================================================== */
     --z-pill: 30;
     --z-audio: 40;

@@ -2,7 +2,9 @@
 <html lang="en" class="scroll-smooth">
     <head>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
         <title>Szhawn Marq's 1st Birthday & Christening 🧸</title>
 
         <meta
@@ -30,7 +32,7 @@
         <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
         <link
-            href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700&display=block"
             rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
@@ -40,8 +42,25 @@
         <link rel="stylesheet" href="css/main.css" />
     </head>
     <body>
+        <!-- PREMIUM SPLASH SCREEN -->
+        <div id="splashScreen" class="splash">
+            <div class="splash__content">
+                <svg class="splash__logo" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path
+                        d="M15 90 C15 20, 45 10, 60 90 C75 10, 105 20, 105 90"
+                        fill="none"
+                        stroke="#FFC72C"
+                        stroke-width="14"
+                        stroke-linecap="round" />
+                </svg>
+                <span class="splash__text">Love ko 'to!</span>
+            </div>
+        </div>
         <noscript>
             <style>
+                #splashScreen {
+                    display: none !important;
+                }
                 #envelopeGate {
                     display: none !important;
                 }
@@ -54,7 +73,7 @@
         <!-- AUDIO -->
         <!-- Drop your file at assets/audio/lullaby.mp3 — falls back to Pixabay if missing. -->
         <audio id="bgAudio" loop preload="none">
-            <source src="assets/audio/lullaby.mp3" type="audio/mpeg" />
+            <source src="assets/audio/bday.mp3" type="audio/mpeg" />
             <source
                 src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lullaby-baby-music-112777.mp3"
                 type="audio/mpeg" />
@@ -75,23 +94,16 @@
         <!-- ENVELOPE GATE -->
         <div id="envelopeGate" class="gate">
             <div class="gate__header">
-                <span class="gate__badge">
-                    <span aria-hidden="true">🧸</span>
-                    We Can Bearly Wait!
-                </span>
                 <p class="gate__title">You're Invited!</p>
                 <p class="gate__subtitle">Szhawn Marq's 1st Birthday &amp; Holy Baptism</p>
+                <p class="gate__date">Sunday, Dec 13, 2026</p>
             </div>
 
             <div class="envelope-wrapper">
                 <div id="envelope" class="envelope">
                     <div class="flap"></div>
-                    <div class="bear-seal" aria-hidden="true"><i class="fas fa-paw"></i></div>
+                    <div class="bear-seal" aria-hidden="true"><i class="fas fa-star"></i></div>
                     <div class="letter">
-                        <div class="letter__icon" aria-hidden="true"><i class="fas fa-baby"></i></div>
-                        <span class="letter__name">Szhawn Marq Resurrection</span>
-                        <p class="letter__date">Sunday, Dec 13, 2026</p>
-                        <div class="letter__divider" aria-hidden="true"></div>
                         <span class="letter__cta">Tap Open Invitation</span>
                     </div>
                 </div>
@@ -99,15 +111,13 @@
 
             <div class="gate__actions">
                 <button id="openBtn" type="button" class="gate__btn">
-                    <i class="fas fa-envelope-open" aria-hidden="true"></i>
                     <span>Open Invitation</span>
-                    <i class="fas fa-paw" aria-hidden="true"></i>
                 </button>
             </div>
 
             <p class="gate__hint">
                 <i class="fas fa-volume-up" aria-hidden="true"></i>
-                Turn on sound for a sweet background lullaby
+                Turn on sound for the best experience
             </p>
         </div>
 
@@ -130,7 +140,7 @@
                         Resurrection
                     </h1>
 
-                    <p class="hero__tagline reveal">Our Little Bear Is Turning One</p>
+                    <p class="hero__tagline reveal">Our Little Prince Is Turning One</p>
 
                     <div class="hero__photo-wrap reveal">
                         <div class="hero__ear hero__ear--outer-left" aria-hidden="true"></div>
@@ -362,7 +372,7 @@
             <!-- STORY -->
             <section id="storySection" class="section">
                 <div class="section__inner section__inner--narrow story">
-                    <div class="story__avatar" aria-hidden="true"><i class="fas fa-paw"></i></div>
+                    <div class="story__avatar" aria-hidden="true"><i class="fas fa-smile-beam"></i></div>
                     <span class="section__eyebrow">A Message From Mommy &amp; Daddy</span>
                     <h2 class="section__title story__title">Our Little Bear's Special Day</h2>
 
@@ -461,11 +471,42 @@
 
                             <div class="rsvp__field">
                                 <label for="guestCount" class="rsvp__label">Number of Guests Attending</label>
-                                <select id="guestCount" name="Number of Guests" class="rsvp__select">
-                                    <option value="1 Person">1 Person</option>
-                                    <option value="2 Persons">2 Persons</option>
-                                    <option value="3+ Persons">3+ Persons</option>
-                                </select>
+
+                                <!-- Custom Dropdown -->
+                                <div class="custom-select" id="guestDropdown">
+                                    <!-- Hidden native select for form submission & accessibility -->
+                                    <select id="guestCount" name="Number of Guests" tabindex="-1">
+                                        <option value="1 Person">1 Person</option>
+                                        <option value="2 Persons">2 Persons</option>
+                                        <option value="3+ Persons">3+ Persons</option>
+                                    </select>
+
+                                    <!-- Visual Trigger -->
+                                    <div class="custom-select__trigger" tabindex="0">
+                                        <span id="guestSelectValue">1 Person</span>
+                                        <svg
+                                            class="custom-select__arrow"
+                                            viewBox="0 0 24 24"
+                                            width="20"
+                                            height="20"
+                                            stroke="#7e22ce"
+                                            stroke-width="2.5"
+                                            fill="none"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <polyline points="6 9 12 15 18 9"></polyline>
+                                        </svg>
+                                    </div>
+
+                                    <!-- Visual Options List -->
+                                    <div class="custom-select__options">
+                                        <div class="custom-select__option is-selected" data-value="1 Person">
+                                            1 Person
+                                        </div>
+                                        <div class="custom-select__option" data-value="2 Persons">2 Persons</div>
+                                        <div class="custom-select__option" data-value="3+ Persons">3+ Persons</div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="rsvp__field">
