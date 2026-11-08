@@ -1,111 +1,90 @@
 /* =========================================================
-   Szhawn Marq Invitation — Design Tokens (Grimace Party Theme)
+   Alona Briella Invitation — Design Tokens
+   Theme: Gabby's Dollhouse (Light Pastel & Playful)
    ========================================================= */
 
 :root {
-    /* ==========================================================
-       1. COLOR — Primary: Deep Grimace Purple (Backgrounds & Borders)
+	/* ==========================================================
+       1. COLOR — Primary: Soft Pastel Backgrounds
        ========================================================== */
-    --babyblue-50: #3b0764; /* Very dark purple (Page background) */
-    --babyblue-100: #581c87; /* Dark purple (Gate background) */
-    --babyblue-200: #7e22ce; /* Mid purple (Borders) */
-    --babyblue-300: #9333ea; /* Bright purple (Accents) */
-    --babyblue-400: #a855f7; /* Grimace Body */
-    --babyblue-500: #c084fc; /* Light Grimace Purple */
-    --babyblue-600: #e9d5ff; /* Very light purple (Text on dark) */
+	--bg-top: #fde1ff; /* Very soft pink */
+	--bg-bottom: #e2c7ff; /* Soft lavender */
 
-    /* ==========================================================
-       2. COLOR — Secondary: McDonald's Yellow (Text, Buttons, Arches)
+	/* ==========================================================
+       2. COLOR — Secondary: Dollhouse Accents (Buttons/Borders)
        ========================================================== */
-    --bear-honey: #fef08a; /* Light Yellow */
-    --bear-warm: #ffc72c; /* McDonald's Golden Yellow */
-    --bear-accent: #ffbc0d; /* Darker Yellow */
-    --bear-soft: #ffc72c; /* Yellow (used for taglines) */
-    --bear-brown: #3b0764; /* Dark Purple (Text on Yellow buttons) */
-    --bear-dark: #2e0661; /* Darkest Purple */
+	--theme-pink-neon: #ff66c4; /* Bright pink (Backgrounds only) */
+	--theme-pink-dark: #d41480; /* Darker pink (Borders/Shadows) */
+	--theme-pink-text: #a0145c; /* Accessible pink for TEXT on light backgrounds */
+	--theme-cyan: #00e5ff; /* Magical cyan */
+	--theme-cyan-dark: #00a3b3; /* Cyan shadow */
+	--theme-yellow: #ffd166; /* Bright yellow */
+	--theme-yellow-dark: #d4a017; /* Yellow shadow */
+	--theme-mint: #a0e7e5; /* Mint green accents */
 
-    /* ==========================================================
-       3. COLOR — Neutrals: Slate (Text inside White Cards)
+	/* ==========================================================
+       3. COLOR — Neutrals: Deep Purple (For high contrast text)
        ========================================================== */
-    --slate-400: #94a3b8;
-    --slate-500: #64748b;
-    --slate-600: #475569;
-    --slate-700: #334155;
-    --slate-800: #1e293b;
-    --slate-900: #0f172a;
+	--slate-500: #6b5b7b;
+	--slate-600: #4a365c;
+	--slate-700: #3b1b5a;
+	--slate-800: #2b0b40; /* Main text color (14.5:1 on white) */
+	--slate-900: #1a052b; /* Darkest text */
 
-    /* ==========================================================
-       4. COLOR — Status: Red (Fries Box / Errors)
+	/* ==========================================================
+       4. COLOR — Status: Red & Green
        ========================================================== */
-    --rose-400: #f87171;
-    --rose-500: #ef4444;
-    --rose-600: #dc2626;
-    --rose-700: #b91c1c;
+	--rose-500: #ef4444;
+	--rose-600: #dc2626;
+	--rose-700: #b91c1c; /* Accessible red for text */
+	--emerald-50: #ecfdf5;
+	--emerald-200: #a7f3d0;
+	--emerald-600: #059669;
 
-    /* ==========================================================
-       5. COLOR — Status: Emerald (Success)
+	/* ==========================================================
+       5. TYPOGRAPHY
        ========================================================== */
-    --emerald-50: #ecfdf5;
-    --emerald-200: #a7f3d0;
-    --emerald-600: #059669;
+	--font-display: "Fredoka", sans-serif;
+	--font-body: "Nunito", sans-serif;
+	--fs-base: 16px;
+	--lh-base: 1.5;
 
-    /* ==========================================================
-       6. COLOR — Extra accents
+	/* ==========================================================
+       6. RADII
        ========================================================== */
-    --amber-300: #fcd34d;
-    --pink-400: #f472b6;
+	--radius-sm: 1rem;
+	--radius-md: 1.5rem;
+	--radius-lg: 2rem;
+	--radius-full: 9999px;
 
-    /* ==========================================================
-       7. TYPOGRAPHY
+	/* ==========================================================
+       7. SHADOWS (Soft, colorful toy-like shadows)
        ========================================================== */
-    --font-display: 'Fredoka', sans-serif;
-    --font-body: 'Nunito', sans-serif;
-    --fs-base: 16px;
-    --lh-base: 1.5;
+	--shadow-sm: 0 2px 4px 0 rgba(42, 8, 69, 0.1);
+	--shadow-md: 0 8px 16px -4px rgba(42, 8, 69, 0.15);
+	--shadow-lg: 0 12px 24px -6px rgba(42, 8, 69, 0.2);
+	--shadow-envelope: 0 16px 32px rgba(42, 8, 69, 0.15);
 
-    /* ==========================================================
-       8. RADII (Bubbly, chunky shapes)
+	/* ==========================================================
+       8. Z-INDEX SCALE
        ========================================================== */
-    --radius-sm: 1rem;
-    --radius-md: 1.5rem;
-    --radius-lg: 2rem;
-    --radius-full: 9999px;
+	--z-pill: 30;
+	--z-audio: 40;
+	--z-gate: 50;
+	--z-toast: 60;
 
-    /* ==========================================================
-       9. SHADOWS (Dark theme needs heavier shadows)
+	/* ==========================================================
+       9. MOTION
        ========================================================== */
-    --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -4px rgba(0, 0, 0, 0.2);
+	--ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	--dur-fast: 0.2s;
+	--dur-base: 0.3s;
+	--dur-slow: 0.7s;
 
-    /* Semantic shadows */
-    --shadow-card-blue: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-    --shadow-card-bear: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-    --shadow-btn-primary: 0 8px 15px -3px rgba(255, 199, 44, 0.4); /* Yellow glow */
-    --shadow-btn-subtle: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-    --shadow-pill: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
-    --shadow-envelope: 0 16px 32px rgba(0, 0, 0, 0.4);
-
-    /* ==========================================================
-       10. Z-INDEX SCALE
+	/* ==========================================================
+       10. LAYOUT
        ========================================================== */
-    --z-pill: 30;
-    --z-audio: 40;
-    --z-gate: 50;
-    --z-toast: 60;
-
-    /* ==========================================================
-       11. MOTION
-       ========================================================== */
-    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-    --dur-fast: 0.2s;
-    --dur-base: 0.3s;
-    --dur-slow: 0.7s;
-
-    /* ==========================================================
-       12. LAYOUT
-       ========================================================== */
-    --container-narrow: 36rem;
-    --container-wide: 48rem;
+	--container-narrow: 36rem;
+	--container-wide: 48rem;
 }

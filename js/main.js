@@ -1,28 +1,31 @@
 /* =========================================================
-   Szhawn Marq Invitation — behaviour
-   RSVP submission remains a local stub until Batch 4.
+   Alona Briella Invitation — behaviour
    ========================================================= */
 
 document.addEventListener('DOMContentLoaded', () => {
 	/* ---------- Config ---------- */
-	const EVENT_DATE_ISO = '2026-12-13T10:00:00+08:00'; // PHT (GMT+8)
-	const EVENT_TITLE = "Szhawn Marq's 1st Birthday & Holy Baptism";
-	const EVENT_DESC = "Join us in celebrating Szhawn Marq Resurrection's 1st Birthday & Holy Baptism!";
-	const EVENT_LOCATION = 'Holy Cross Parish & Reception Hall, Valenzuela City, Metro Manila';
-	const EVENT_START = '20261213T100000';
-	const EVENT_END = '20261213T150000';
+	const EVENT_DATE_ISO = '2026-11-27T16:00:00+08:00'; // PHT (GMT+8)
+	const EVENT_TITLE = "Alona Briella's 6th Birthday";
+	const EVENT_DESC = "Join us in celebrating Alona Briella Japlos's 6th Birthday!";
+	const EVENT_LOCATION = 'Japlos Residence, Fortune Village, Valenzuela City';
+	const EVENT_START = '20261127T160000';
+	const EVENT_END = '20261127T200000';
 
 	/* ---------- Refs ---------- */
-	const splashScreen = document.getElementById('splashScreen');
-	const envelopeGate = document.getElementById('envelopeGate');
-	const bearSeal = document.querySelector('.bear-seal');
-	const envelope = document.getElementById('envelope');
+	// New Landing & Video Refs
+	const landingPage = document.getElementById('landingPage');
 	const openBtn = document.getElementById('openBtn');
+	const introVideoContainer = document.getElementById('introVideoContainer');
+	const introVideo = document.getElementById('introVideo');
+
+	// Main Content & Audio Refs
 	const mainContent = document.getElementById('mainContent');
 	const bgAudio = document.getElementById('bgAudio');
 	const audioControl = document.getElementById('audioControl');
 	const toggleAudioBtn = document.getElementById('toggleAudioBtn');
 	const audioIcon = document.getElementById('audioIcon');
+
+	// Hero & UI Refs
 	const heroPhoto = document.getElementById('heroPhoto');
 	const countdownSr = document.getElementById('countdownSr');
 	const countdownCards = document.getElementById('countdownCards');
@@ -35,9 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
 	const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 	/* ---------- Audio Volume Control ---------- */
-	const TARGET_VOLUME = 0.45; // 45% volume (adjust between 0.3 and 0.6 as needed)
+	const TARGET_VOLUME = 1; // 45% volume
 	let fadeInterval;
-
 	let isPlaying = false;
 	let rsvpSubmitted = false;
 
@@ -46,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		history.scrollRestoration = 'manual';
 	}
 
-	/* ---------- Scroll lock while gate is open ---------- */
+	/* ---------- Scroll lock while landing/video is open ---------- */
 	document.body.style.overflow = 'hidden';
 
 	/* ---------- Helpers ---------- */
@@ -54,10 +56,10 @@ document.addEventListener('DOMContentLoaded', () => {
 		if (prefersReducedMotion.matches) return;
 		if (typeof window.confetti !== 'function') return;
 		window.confetti({
-			particleCount: 80,
-			spread: 70,
+			particleCount: 100,
+			spread: 80,
 			origin: { y: 0.6 },
-			colors: ['#BAE6FD', '#7DD3FC', '#FEF3C7', '#F59E0B', '#38BDF8']
+			colors: ['#FF66C4', '#FFD166', '#00E5FF', '#A0E7E5', '#D41480', '#FFFFFF']
 		});
 	}
 
@@ -78,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	function fadeAudio(audioElement, targetVol, duration) {
 		clearInterval(fadeInterval);
 		const startVol = audioElement.volume;
-		const steps = 30; // 30 frames for smoothness
+		const steps = 30;
 		const stepTime = duration / steps;
 		const volStep = (targetVol - startVol) / steps;
 		let currentStep = 0;
@@ -86,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
 		fadeInterval = setInterval(() => {
 			currentStep++;
 			let newVol = startVol + (volStep * currentStep);
-			// Clamp between 0 and 1
 			if (newVol < 0) newVol = 0;
 			if (newVol > 1) newVol = 1;
 			audioElement.volume = newVol;
@@ -94,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			if (currentStep >= steps) {
 				clearInterval(fadeInterval);
 				if (targetVol === 0) {
-					audioElement.pause(); // Pause only after fade out is done
+					audioElement.pause();
 				}
 			}
 		}, stepTime);
@@ -104,90 +105,159 @@ document.addEventListener('DOMContentLoaded', () => {
 		const toast = document.createElement('div');
 		toast.textContent = message;
 		toast.setAttribute('role', 'status');
-		toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2 bg-slate-800 text-white text-xs font-semibold rounded-full shadow-lg transition-opacity duration-300';
+		toast.className = 'toast';
 		document.body.appendChild(toast);
 		setTimeout(() => { toast.style.opacity = '0'; }, 2000);
 		setTimeout(() => { toast.remove(); }, 2400);
 	}
 
-	/* ---------- Premium Splash Screen ---------- */
-	// Wait for fonts to be fully loaded before showing the splash screen
-	document.fonts.ready.then(() => {
-		if (splashScreen) {
-			splashScreen.style.opacity = '1';
+	/* ---------- Landing / Video transition ---------- */
+	let isOpening = false;
+	let introFinished = false;
 
-			setTimeout(() => {
-				splashScreen.classList.add('fade-out');
+	function playIntroVideo() {
+		if (isOpening) return;
+		isOpening = true;
 
-				// Wait for splash fade-out, then reveal the gate
-				setTimeout(() => {
-					splashScreen.style.display = 'none';
-					envelopeGate.classList.add('is-revealed'); // Fades the gate in
-				}, 600);
-			}, 2000); // 2 seconds
-		}
-	});
+		// 1. Fade out the landing page
+		landingPage.classList.add('fade-out');
 
-	/* ---------- Gate / envelope transition ---------- */
-	function openInvitation() {
-		// 1. Trigger the star spin animation
-		if (bearSeal) {
-			bearSeal.classList.add('is-spinning');
-		}
+		// 2. Show the video container
+		setTimeout(() => {
+			landingPage.style.display = 'none';
+			introVideoContainer.classList.remove('hidden');
 
-		// 2. Start playing the audio with a smooth fade-in
-		bgAudio.volume = 0; // Start silent
+			// Play the blurred background video
+			const introVideoBg = document.getElementById('introVideoBg');
+			if (introVideoBg) {
+				introVideoBg.play().catch(e => console.log("Bg video error:", e));
+			}
+
+			// Play the main video
+			introVideo.play().catch((e) => {
+				console.log("Autoplay prevented.");
+				finishIntro();
+			});
+		}, 400);
+
+		// 3. Listen for the video ending naturally (as a fallback)
+		introVideo.addEventListener('ended', finishIntro);
+
+		// 4. Trigger the fade 3 seconds BEFORE the video ends
+		introVideo.addEventListener('timeupdate', () => {
+			if (introVideo.duration > 2) {
+				const timeLeft = introVideo.duration - introVideo.currentTime;
+				if (timeLeft <= 2) { // <--- Changed from 3 to 1.5
+					finishIntro();
+				}
+			}
+		});
+	}
+
+	function finishIntro() {
+		// Prevent double-firing (since both timeupdate and 'ended' might trigger)
+		if (introFinished) return;
+		introFinished = true;
+
+		// Start fading the video out smoothly
+		introVideoContainer.classList.add('fade-out');
+
+		// Start the background music
+		bgAudio.volume = 0;
 		bgAudio.play().then(() => {
 			isPlaying = true;
 			audioControl.classList.remove('hidden');
 			updateAudioUI();
-			fadeAudio(bgAudio, TARGET_VOLUME, 1500); // Fade to 45% over 1.5 seconds
+			fadeAudio(bgAudio, TARGET_VOLUME, 1500);
 		}).catch(() => {
 			audioControl.classList.remove('hidden');
 			updateAudioUI();
 		});
 
-		// 3. Fire confetti almost immediately (0.2s into the spin)
-		setTimeout(() => {
-			launchConfetti();
-		}, 200);
+		// Fire the MEGA CONFETTI right as the video starts fading
+		launchMegaConfetti();
 
-		// 4. Trigger the cinematic scene transition right as the star finishes spinning (0.5s)
+		// Wait 1.5 seconds for the video to mostly fade out, then reveal the main page
 		setTimeout(() => {
-			envelopeGate.classList.remove('is-revealed');
-			envelopeGate.classList.add('is-hidden');
+			introVideoContainer.style.display = 'none';
+			if (introVideoBg) introVideoBg.pause();
+			introVideo.pause();
 
-			// Force scroll to top BEFORE revealing the main content
 			window.scrollTo(0, 0);
 
 			mainContent.classList.add('is-visible');
 			mainContent.inert = false;
 			document.body.style.overflow = '';
 
-			// 5. Clean up once the 0.6s CSS transition is complete
 			setTimeout(() => {
-				envelopeGate.style.display = 'none';
 				startScrollReveal();
 				startRsvpPillTracking();
-			}, 650); // Slightly longer than the 0.6s CSS transition
+			}, 100);
 
-		}, 500);
+		}, 1500); // 1.5s delay lets the video fade out smoothly underneath
 	}
 
-	openBtn.addEventListener('click', openInvitation);
+	/* ---------- Mega Confetti ---------- */
+	function launchMegaConfetti() {
+		if (prefersReducedMotion.matches) return;
+		if (typeof window.confetti !== 'function') return;
 
-	/* ---------- Audio toggle ---------- */
+		const colors = ['#FF66C4', '#FFD166', '#00E5FF', '#A0E7E5', '#D41480', '#FFFFFF'];
+
+		// 1. Initial center blast
+		window.confetti({
+			particleCount: 200,
+			spread: 100,
+			origin: { y: 0.6 },
+			colors: colors,
+			startVelocity: 45
+		});
+
+		// 2. Continuous side cannons for 3 seconds
+		const duration = 3000;
+		const end = Date.now() + duration;
+
+		(function frame() {
+			window.confetti({
+				particleCount: 4,
+				angle: 60,
+				spread: 55,
+				origin: { x: 0, y: 0.7 },
+				colors: colors
+			});
+			window.confetti({
+				particleCount: 4,
+				angle: 120,
+				spread: 55,
+				origin: { x: 1, y: 0.7 },
+				colors: colors
+			});
+
+			if (Date.now() < end) {
+				requestAnimationFrame(frame);
+			}
+		}());
+	}
+
+	// Attach event listeners for Landing / Video
+	openBtn.addEventListener('click', playIntroVideo);
+
+	introVideoContainer.addEventListener('click', finishIntro);
+
+	// Optional: If you use a GIF instead of a video, uncomment this:
+	// setTimeout(finishIntro, 8000);
+
 	/* ---------- Audio toggle ---------- */
 	toggleAudioBtn.addEventListener('click', () => {
 		if (isPlaying) {
 			isPlaying = false;
 			updateAudioUI();
-			fadeAudio(bgAudio, 0, 500); // Fade out over 0.5s, then pause automatically
+			fadeAudio(bgAudio, 0, 500);
 		} else {
 			isPlaying = true;
 			updateAudioUI();
 			bgAudio.play().then(() => {
-				fadeAudio(bgAudio, TARGET_VOLUME, 1000); // Fade in over 1s
+				fadeAudio(bgAudio, TARGET_VOLUME, 1000);
 			}).catch(() => { });
 		}
 	});
@@ -203,12 +273,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	function buildICS() {
 		const now = new Date();
 		const dtstamp = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
-		const uid = `szhawn-1st-bday-${now.getTime()}@szhawn-invitation`;
+		const uid = `alona-6th-bday-${now.getTime()}@alona-invitation`;
 
 		return [
 			'BEGIN:VCALENDAR',
 			'VERSION:2.0',
-			'PRODID:-//Szhawn Marq Invitation//EN',
+			'PRODID:-//Alona Briella Invitation//EN',
 			'CALSCALE:GREGORIAN',
 			'METHOD:PUBLISH',
 			'BEGIN:VEVENT',
@@ -229,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		const blob = new Blob([buildICS()], { type: 'text/calendar;charset=utf-8' });
 		const link = document.createElement('a');
 		link.href = URL.createObjectURL(blob);
-		link.download = 'Szhawn_Marq_1st_Birthday.ics';
+		link.download = 'Alona_Briella_6th_Birthday.ics';
 		document.body.appendChild(link);
 		link.click();
 		document.body.removeChild(link);
@@ -277,8 +347,8 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 		const days = Math.floor(diff / 86400000);
 		countdownSr.textContent = days <= 1
-			? "Less than a day until Szhawn Marq's celebration on December 13, 2026."
-			: `${days} days until Szhawn Marq's celebration on December 13, 2026.`;
+			? "Less than a day until Alona Briella's celebration on November 27, 2026."
+			: `${days} days until Alona Briella's celebration on November 27, 2026.`;
 	}
 
 	updateCountdown();
@@ -344,27 +414,23 @@ document.addEventListener('DOMContentLoaded', () => {
 	/* ---------- Hero image fallback ---------- */
 	if (heroPhoto) {
 		heroPhoto.addEventListener('error', () => {
-			heroPhoto.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23E0F2FE'/%3E%3Ctext x='200' y='210' font-family='sans-serif' font-size='26' fill='%230284C7' text-anchor='middle'%3ESzhawn Marq%3C/text%3E%3C/svg%3E";
+			heroPhoto.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' fill='%23D8F8FA'/%3E%3Ctext x='200' y='210' font-family='sans-serif' font-size='26' fill='%23FF66C4' text-anchor='middle'%3EAlona Briella%3C/text%3E%3C/svg%3E";
 		}, { once: true });
 	}
+
 	/* ---------- Native App: Keyboard & Input Handling ---------- */
 	const formInputs = document.querySelectorAll('.rsvp__input, .rsvp__select, .rsvp__textarea');
 
 	formInputs.forEach(input => {
-		// When user taps an input, wait for keyboard to open, then scroll into view
 		input.addEventListener('focus', (e) => {
-			// Hide floating RSVP pill so it doesn't cover the keyboard
 			if (rsvpPill) rsvpPill.classList.remove('is-visible');
-
-			// Scroll the input into view (100px offset for breathing room)
 			setTimeout(() => {
 				const yOffset = -120;
 				const y = e.target.getBoundingClientRect().top + window.scrollY + yOffset;
 				window.scrollTo({ top: y, behavior: 'smooth' });
-			}, 300); // 300ms wait for iOS/Android keyboard animation
+			}, 300);
 		});
 
-		// When user taps away (keyboard closes), restore the floating pill
 		input.addEventListener('blur', () => {
 			refreshRsvpPill();
 		});
@@ -378,44 +444,30 @@ document.addEventListener('DOMContentLoaded', () => {
 	const nativeGuestSelect = document.getElementById('guestCount');
 
 	if (guestDropdown && guestTrigger && nativeGuestSelect) {
-		// Toggle open/close
 		guestTrigger.addEventListener('click', () => {
 			if (!guestDropdown.classList.contains('is-disabled')) {
 				guestDropdown.classList.toggle('open');
 			}
 		});
 
-		// Handle option selection
 		guestOptions.forEach(option => {
 			option.addEventListener('click', () => {
-				// 1. Remove selected class from all
 				guestOptions.forEach(opt => opt.classList.remove('is-selected'));
-
-				// 2. Add to clicked
 				option.classList.add('is-selected');
-
-				// 3. Update visual text
 				const value = option.getAttribute('data-value');
 				guestSelectValue.textContent = value;
-
-				// 4. Update hidden select (so rsvp.js catches it)
 				nativeGuestSelect.value = value;
 				nativeGuestSelect.dispatchEvent(new Event('change'));
-
-				// 5. Close dropdown
 				guestDropdown.classList.remove('open');
 			});
 		});
 
-		// Close when clicking outside
 		document.addEventListener('click', (e) => {
 			if (!guestDropdown.contains(e.target)) {
 				guestDropdown.classList.remove('open');
 			}
 		});
 
-		// Sync disabled state from the hidden select to the visual trigger
-		// (rsvp.js disables the select when user declines)
 		const observer = new MutationObserver(() => {
 			if (nativeGuestSelect.disabled) {
 				guestDropdown.classList.add('is-disabled');

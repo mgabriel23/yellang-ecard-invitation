@@ -11,6 +11,9 @@
 	// ============================================================
 	// CONFIG — edit these values only
 	// ============================================================
+		// ============================================================
+	// CONFIG — edit these values only
+	// ============================================================
 	const CONFIG = {
 		// 'web3forms' (recommended) or 'formspree'
 		provider: 'web3forms',
@@ -22,11 +25,12 @@
 		formspreeId: 'PASTE_YOUR_FORMSPREE_ID',
 
 		// Subject of the notification email
-		subject: "RSVP — Szhawn Marq's 1st Birthday and christening (Dec 13)",
+		subject: "RSVP — Alona Briella's 6th Birthday (Nov 27)", // <--- Updated
 
 		// Shown in the mailto: fallback if the POST fails
 		fallbackEmail: 'markbryan.gabriel@gmail.com',
 	};
+	// ============================================================
 	// ============================================================
 
 	const form = document.getElementById('rsvpForm');
@@ -46,11 +50,7 @@
 	form.querySelectorAll('input[name="Attendance"]').forEach(radio => {
 		radio.addEventListener('change', () => {
 			if (!guestCount) return;
-			const declining = !!(declineRadio && declineRadio.checked);
-			guestCount.disabled = declining;
-			// Prevent a stale headcount from leaking into a declined RSVP
-			if (declining) guestCount.dataset.previousValue = guestCount.value;
-			else if (guestCount.dataset.previousValue) guestCount.value = guestCount.dataset.previousValue;
+			guestCount.disabled = !!(declineRadio && declineRadio.checked);
 		});
 	});
 
